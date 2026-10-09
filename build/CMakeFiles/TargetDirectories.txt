@@ -1,0 +1,3 @@
+/home/ricardo/Documentos/Block-Merge/build/CMakeFiles/BlockBlast.dir
+/home/ricardo/Documentos/Block-Merge/build/CMakeFiles/edit_cache.dir
+/home/ricardo/Documentos/Block-Merge/build/CMakeFiles/rebuild_cache.dir

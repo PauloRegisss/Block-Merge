@@ -1,0 +1,6 @@
+# ninja log v7
+1	8	1791556708943677597	CMakeFiles/BlockBlast.dir/src/piece.c.o	f1a644c7fad11480
+1	8	1791556708943376314	CMakeFiles/BlockBlast.dir/src/game.c.o	2b682cdd0f607be0
+1	9	1791556708943515419	CMakeFiles/BlockBlast.dir/src/board.c.o	f0fdc00adaeb3fb5
+1	15	1791556708942264365	CMakeFiles/BlockBlast.dir/src/main.c.o	c2f8068b2ca5f96e
+16	37	1791556708957264876	BlockBlast	9090e6bfa4bc5dac
