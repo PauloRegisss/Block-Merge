@@ -12,7 +12,7 @@ int main(void) {
 
     ClearBackground((Color){24, 26, 35, 255});
 
-    DrawText("Block Blast", 300, 350, 40, RAYWHITE);
+    DrawText("Block TESTE", 300, 350, 40, RAYWHITE);
 
     DrawText("Pressione ESC para sair", 290, 410, 20, LIGHTGRAY);
 

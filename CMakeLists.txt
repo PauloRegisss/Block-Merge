@@ -30,7 +30,7 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
-    target_compile_options(${PROJECT_NAME}
+  target_compile_options(${PROJECT_NAME}
         PRIVATE
             -Wall
             -Wextra
