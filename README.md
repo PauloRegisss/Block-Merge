@@ -59,3 +59,62 @@ Combine estratégia e raciocínio lógico para aproveitar melhor o espaço dispo
 - [ ] Vídeo curto do jogo rodando, com link no repositório
 - [ ] Parte 2: entrega final com código-fonte e formulário (19/11/2026)
 - [ ] Apresentação oral (24/11 ou 26/11)
+
+## 🗂️ Estrutura do projeto
+
+```
+Block-Merge/
+├── src/
+│   ├── main.c        # Ponto de entrada, janela, menu e desenho da grade
+│   ├── game.c        # Estado e loop do jogo
+│   ├── board.c       # Lógica do tabuleiro
+│   └── piece.c       # Definição e manipulação das peças
+├── include/          # Headers (.h)
+├── design.pen        # Protótipo visual do menu (1440×900)
+├── CMakeLists.txt    # Configuração de build
+└── README.md
+```
+
+## 🛠️ Tecnologias
+
+- **Linguagem:** C (padrão C11)
+- **Biblioteca gráfica:** [raylib](https://www.raylib.com/)
+- **Build:** CMake ≥ 3.22
+- **Compiladores:** GCC ou Clang
+
+## 🚀 Como compilar e executar
+
+### Pré-requisitos
+- Compilador C (GCC ou Clang)
+- CMake 3.22 ou superior
+- raylib instalada e encontrável pelo CMake
+
+```bash
+# Ubuntu/Debian
+sudo apt install build-essential cmake libraylib-dev
+
+# macOS
+brew install raylib cmake
+```
+
+### Build e execução
+
+```bash
+git clone <url-do-repositorio>
+cd Jogo-PIF
+
+cmake -S . -B build
+cmake --build build
+
+./build/BlockBlast
+```
+
+> No Windows, o executável fica em `build\BlockBlast.exe` (ou dentro de `build\Debug\` / `build\Release\`).
+
+## 👤 Alunos
+
+**Paulo César Regis de Lima** 
+
+**Pedro Antonio Beltrao Rihan** 
+
+**Ricardo Marinho do Prado** 
