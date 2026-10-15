@@ -19,7 +19,7 @@ int main(void) {
 
   Board board; //troquei a int matriz[8][8]
   board_init(&board);          // & = "passa o endereço do board"
-  board_set(&board, 2, 2, 0);
+  board_set(&board, 3, 4, 1);
   int larguraGrade = BOARD_SIZE * TAMANHO_CELULA + (BOARD_SIZE - 1) * ESPACO;
   int origemX = (WINDOW_WIDTH - larguraGrade) / 2;
   int origemY = 40;

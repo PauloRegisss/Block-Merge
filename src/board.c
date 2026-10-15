@@ -20,7 +20,7 @@ bool board_is_empty(const Board *board, int row, int col){
 }
 
 void board_set(Board *board, int row, int col, int value) {
-    if(!board_in_bounds(row, col)){
+    if(board_in_bounds(row, col)){
         board->cells[row][col] = value;
     }
 }
