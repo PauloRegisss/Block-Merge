@@ -1,6 +1,6 @@
 #include "raylib.h"
 #include "board.h"
-#include "sreen.h"
+#include "screen.h"
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 #define TAMANHO_CELULA 60   //numeros da grade
@@ -19,7 +19,7 @@ int main(void) {
 
   Board board; //troquei a int matriz[8][8]
   board_init(&board);          // & = "passa o endereço do board"
-  board_set(&board, 3, 4, 1);
+  board_set(&board, 6, 7, 1);
   int larguraGrade = BOARD_SIZE * TAMANHO_CELULA + (BOARD_SIZE - 1) * ESPACO;
   int origemX = (WINDOW_WIDTH - larguraGrade) / 2;
   int origemY = 40;
