@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "board.h"
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 #define TAMANHO_CELULA 60   //numeros da grade
@@ -16,17 +17,10 @@ int main(void) {
   Rectangle bottom; //declarei uma variavel bottom do tipo Rectangle (retangulo)
   bottom = (Rectangle) { (WINDOW_WIDTH - 200) / 2, 400, 200, 60 };
 
-  int matriz[8][8] = {
-    {0, 0, 0, 0, 0, 0, 0, 0}, // 0 
-    {0, 0, 0, 0, 0, 0, 0, 0}, // 1
-    {0, 0, 0, 0, 0, 0, 0, 0}, // 2
-    {0, 0, 0, 0, 1, 0, 0, 0}, // 3
-    {0, 0, 0, 0, 0, 0, 0, 0}, // 4
-    {0, 0, 0, 0, 0, 0, 0, 0}, // 5
-    {0, 0, 0, 0, 0, 0, 0, 0}, // 6
-    {0, 0, 0, 0, 0, 0, 0, 0}, // 7
-  };  
-  int larguraGrade = 8 * TAMANHO_CELULA + 7 * ESPACO;
+  Board board; //troquei a int matriz[8][8]
+  board_init(&board);          // & = "passa o endereço do board"
+  board_set(&board, 3, 4, 1);
+  int larguraGrade = BOARD_SIZE * TAMANHO_CELULA + (BOARD_SIZE - 1) * ESPACO;
   int origemX = (WINDOW_WIDTH - larguraGrade) / 2;
   int origemY = 40;
 
@@ -53,14 +47,14 @@ int main(void) {
 
     } else {
       // os for ficam aqui dentro: a grade só é desenhada na tela JOGANDO
-      for (int i = 0; i < 8; i++){
-        for (int j = 0; j < 8; j++){
+      for (int i = 0; i < BOARD_SIZE; i++){       //troquei 8 por BOARD_SIZE
+        for (int j = 0; j < BOARD_SIZE; j++){     //troquei 8 por BOARD_SIZE
           int x = origemX +  j * (TAMANHO_CELULA + ESPACO);
           int y = origemY + i * (TAMANHO_CELULA+ ESPACO);
 
           Color cor;
 
-          if(matriz[i][j] == 0){
+          if(board.cells[i][j] == 0){ //troquei matriz por board.cells
             cor = (Color) {100, 100, 100, 255};
           } else{
             cor = PURPLE;
