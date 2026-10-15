@@ -29,24 +29,62 @@ Color piece_get_color(const Piece *piece) {
 #define SHAPE_COUNT 4
 
 static const int SHAPES[SHAPE_COUNT][PIECE_SIZE][PIECE_SIZE] = {
-    { // 0: quadrado 2x2
+    { 
         {1, 1, 0},
         {1, 1, 0},
         {0, 0, 0},
     },
-    { // 1: linha horizontal de 3
+    { 
         {1, 1, 1},
         {0, 0, 0},
         {0, 0, 0},
     },
-    { // 2: L
+    { 
         {1, 0, 0},
         {1, 0, 0},
         {1, 1, 0},
     },
-    { // 3: ponto único
+    { 
         {1, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
     },
+    { 
+        {1, 0, 0},
+        {1, 0, 0},
+        {1, 0, 0},
+    },
+    {
+        {1, 1, 1},
+        {0, 1, 0},
+        {0, 1, 0},
+    },
 };
+
+Piece piece_create_random(void){
+    Piece piece;
+    int s = GetRandomValue(0, SHAPE_COUNT - 1); //valor aleatorio de 0 a 5
+
+    for (int i = 0; i < PIECE_SIZE; i++) {
+        for (int j = 0; j < PIECE_SIZE; j++) {
+            piece.shape[i][j] = SHAPES[s][i][j];
+        }
+    }
+
+    piece.colorIndex = GetRandomValue(0, PALETTE_COUNT - 1);  //valor aleatorio de 0 a 5
+    return piece;
+}
+
+void piece_draw(const Piece *piece, int x, int y, int cellSize, int gap) {
+    Color cor = piece_get_color(piece);
+
+    for (int i = 0; i < PIECE_SIZE; i++) {
+        for (int j = 0; j < PIECE_SIZE; j++) {
+            if (piece->shape[i][j] == 1) {
+                DrawRectangle(x + j * (cellSize + gap),
+                              y + i * (cellSize + gap),
+                              cellSize, cellSize, cor);
+            }
+        }
+    }
+}
