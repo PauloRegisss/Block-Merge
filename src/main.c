@@ -1,18 +1,18 @@
 #include "raylib.h"
 #include "board.h"
+#include "sreen.h"
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 #define TAMANHO_CELULA 60   //numeros da grade
 #define ESPACO 4
 
-typedef enum {MENU, JOGANDO} Tela; // lista de numeros com nome "Tela"
 
 int main(void) {
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Block Merge");
   SetWindowPosition(100, 100); //move a janela pra um ponto fixo da tela
   SetTargetFPS(60);
 
-  Tela tela = MENU; // inicia o jogo no menu 
+  GameScreen screen = SCREEN_MENU; // inicia o jogo no menu
 
   Rectangle bottom; //declarei uma variavel bottom do tipo Rectangle (retangulo)
   bottom = (Rectangle) { (WINDOW_WIDTH - 200) / 2, 400, 200, 60 };
@@ -26,10 +26,10 @@ int main(void) {
 
   while (!WindowShouldClose()) {
 
-    if (tela == MENU){
+    if (screen == SCREEN_MENU){
       if (CheckCollisionPointRec(GetMousePosition(), bottom) &&
           IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-          tela = JOGANDO;
+          screen = SCREEN_GAMEPLAY;
       }
     }
 
@@ -38,9 +38,9 @@ int main(void) {
 
     if(tela == MENU){
         DrawRectangleRounded(bottom, 0.3f, 8, BLUE);
-        DrawText("Start", 
-                bottom.x + (bottom.width - MeasureText("Start", 30)) / 2,
-                bottom.y + (bottom.height - 30) / 2,
+        DrawText("Start",
+                (int)(bottom.x + (bottom.width - MeasureText("Start", 30)) / 2.0f),
+                (int)(bottom.y + (bottom.height - 30) / 2.0f),
                 30, WHITE);
         DrawText("Block Merge TESTE", 300, 350, 40, RAYWHITE);
         DrawText("Pressione ESC para sair", 290, 500, 20, LIGHTGRAY);
