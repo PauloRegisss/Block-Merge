@@ -1,74 +1,90 @@
-#include "raylib.h"
 #include "board.h"
+#include "fonts.h"
+#include "menu.h"
+#include "raylib.h"
 #include "screen.h"
+#include <curses.h>
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
-#define TAMANHO_CELULA 60   //numeros da grade
+#define TAMANHO_CELULA 60 // numeros da grade
 #define ESPACO 4
 
-
 int main(void) {
-  InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Block Merge");
-  SetWindowPosition(100, 100); //move a janela pra um ponto fixo da tela
-  SetTargetFPS(60);
+    InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Block Merge");
+    // SetWindowPosition(100, 100);
+    SetTargetFPS(60);
+    LoadFonts();
+    SetTextureFilter(FontTitle.texture, TEXTURE_FILTER_BILINEAR);
+    SetTextureFilter(FontRegular.texture, TEXTURE_FILTER_BILINEAR);
+    GameScreen screen = SCREEN_MENU; // inicia o jogo no menu
 
-  GameScreen screen = SCREEN_MENU; // inicia o jogo no menu
+    Rectangle bottom; // declarei uma variavel bottom do tipo Rectangle
+                      // (retangulo)
+    bottom = (Rectangle){(WINDOW_WIDTH - 200) / 2, 400, 200, 60};
 
-  Rectangle bottom; //declarei uma variavel bottom do tipo Rectangle (retangulo)
-  bottom = (Rectangle) { (WINDOW_WIDTH - 200) / 2, 400, 200, 60 };
+    Board board;        // troquei a int matriz[8][8]
+    board_init(&board); // & = "passa o endereço do board"
+    board_set(&board, 6, 7, 1);
+    int larguraGrade = BOARD_SIZE * TAMANHO_CELULA + (BOARD_SIZE - 1) * ESPACO;
+    int origemX = (WINDOW_WIDTH - larguraGrade) / 2;
+    int origemY = 40;
 
-  Board board; //troquei a int matriz[8][8]
-  board_init(&board);          // & = "passa o endereço do board"
-  board_set(&board, 6, 7, 1);
-  int larguraGrade = BOARD_SIZE * TAMANHO_CELULA + (BOARD_SIZE - 1) * ESPACO;
-  int origemX = (WINDOW_WIDTH - larguraGrade) / 2;
-  int origemY = 40;
+    while (!WindowShouldClose()) {
 
-  while (!WindowShouldClose()) {
-
-    if (screen == SCREEN_MENU){
-      if (CheckCollisionPointRec(GetMousePosition(), bottom) &&
-          IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-          screen = SCREEN_GAMEPLAY;
-      }
-    }
-
-    BeginDrawing();
-    ClearBackground((Color){50, 50, 50, 255});
-
-    if(tela == MENU){
-        DrawRectangleRounded(bottom, 0.3f, 8, BLUE);
-        DrawText("Start",
-                (int)(bottom.x + (bottom.width - MeasureText("Start", 30)) / 2.0f),
-                (int)(bottom.y + (bottom.height - 30) / 2.0f),
-                30, WHITE);
-        DrawText("Block Merge TESTE", 300, 350, 40, RAYWHITE);
-        DrawText("Pressione ESC para sair", 290, 500, 20, LIGHTGRAY);
-
-    } else {
-      // os for ficam aqui dentro: a grade só é desenhada na tela JOGANDO
-      for (int i = 0; i < BOARD_SIZE; i++){       //troquei 8 por BOARD_SIZE
-        for (int j = 0; j < BOARD_SIZE; j++){     //troquei 8 por BOARD_SIZE
-          int x = origemX +  j * (TAMANHO_CELULA + ESPACO);
-          int y = origemY + i * (TAMANHO_CELULA+ ESPACO);
-
-          Color cor;
-
-          if(board.cells[i][j] == 0){ //troquei matriz por board.cells
-            cor = (Color) {100, 100, 100, 255};
-          } else{
-            cor = PURPLE;
-          }
-          DrawRectangle(x, y, TAMANHO_CELULA, TAMANHO_CELULA, cor);
+        switch (screen) {
+            case SCREEN_MENU:
+                screen = menu_update();
+                break;
         }
-      }
+        BeginDrawing();
+        ClearBackground((Color){17, 24, 43, 255});
+        switch (screen) {
+            case SCREEN_MENU:
+                menu_draw();
+                break;
+        }
+        // if (screen == SCREEN_MENU){
+        //   if (CheckCollisionPointRec(GetMousePosition(), bottom) &&
+        //       IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        //       screen = SCREEN_GAMEPLAY;
+        //   }
+        // }
+
+        // BeginDrawing();
+        // ClearBackground((Color){50, 50, 50, 255});
+
+        // if(tela == MENU){
+        //     DrawRectangleRounded(bottom, 0.3f, 8, BLUE);
+        //     DrawText("Start",
+        //             (int)(bottom.x + (bottom.width - MeasureText("Start", 30))
+        //             / 2.0f), (int)(bottom.y + (bottom.height - 30) / 2.0f), 30,
+        //             WHITE);
+        //     DrawText("Block Merge TESTE", 300, 350, 40, RAYWHITE);
+        //     DrawText("Pressione ESC para sair", 290, 500, 20, LIGHTGRAY);
+
+        // } else {
+        //   // os for ficam aqui dentro: a grade só é desenhada na tela JOGANDO
+        //   for (int i = 0; i < BOARD_SIZE; i++){       //troquei 8 por BOARD_SIZE
+        //     for (int j = 0; j < BOARD_SIZE; j++){     //troquei 8 por BOARD_SIZE
+        //       int x = origemX +  j * (TAMANHO_CELULA + ESPACO);
+        //       int y = origemY + i * (TAMANHO_CELULA+ ESPACO);
+
+        //       Color cor;
+
+        //       if(board.cells[i][j] == 0){ //troquei matriz por board.cells
+        //         cor = (Color) {100, 100, 100, 255};
+        //       } else{
+        //         cor = PURPLE;
+        //       }
+        //       DrawRectangle(x, y, TAMANHO_CELULA, TAMANHO_CELULA, cor);
+        //     }
+        //   }
+        // }
+
+        EndDrawing();
     }
 
-    EndDrawing();
+    CloseWindow();
 
-  }
-
-  CloseWindow();
-
-  return 0;
+    return 0;
 }
