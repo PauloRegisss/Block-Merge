@@ -27,7 +27,7 @@ Color piece_get_color(const Piece *piece) {
     return PALETTE[piece->colorIndex];
 }
 
-#define SHAPE_COUNT 4
+#define SHAPE_COUNT 16
 
 
 static const int SHAPES[SHAPE_COUNT][PIECE_SIZE][PIECE_SIZE] = {
@@ -146,7 +146,7 @@ static const int SHAPES[SHAPE_COUNT][PIECE_SIZE][PIECE_SIZE] = {
 
 Piece piece_create_random(void) {
     Piece piece;
-    int s = GetRandomValue(0, SHAPE_COUNT - 1); // valor aleatorio de 0 a 5
+    int s = GetRandomValue(0, SHAPE_COUNT - 1); // valor aleatorio de 0 a 15
 
     for (int i = 0; i < PIECE_SIZE; i++) {
         for (int j = 0; j < PIECE_SIZE; j++) {
@@ -154,7 +154,7 @@ Piece piece_create_random(void) {
         }
     }
 
-    piece.colorIndex = GetRandomValue(0, PALETTE_COUNT - 1); // valor aleatorio de 0 a 5
+    piece.colorIndex = GetRandomValue(0, PALETTE_COUNT - 1); // gera um valor aleatorio
     return piece;
 }
 
@@ -169,4 +169,17 @@ void piece_draw(const Piece *piece, int x, int y, int cellSize, int gap) {
             }
         }
     }
+}
+
+int piece_count_blocks(const Piece *piece){
+    int total = 0;
+
+    for(int i = 0; i < PIECE_SIZE; i++){
+        for(int j = 0; j < PIECE_SIZE; j++){
+            if(piece->shape[i][j] == 1){
+                total++;
+            }
+        }
+    }
+    return total;
 }

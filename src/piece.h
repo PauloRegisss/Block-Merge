@@ -14,5 +14,6 @@ Piece piece_create_random(void);
 Color piece_get_color(const Piece *piece);
 Piece piece_create_random(void);
 void  piece_draw(const Piece *piece, int x, int y, int cellSize, int gap);
+int piece_count_block(const Piece *piece);
 
 #endif
