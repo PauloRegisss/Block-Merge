@@ -171,7 +171,9 @@ void piece_draw(const Piece *piece, int x, int y, int cellSize, int gap) {
     }
 }
 
-int piece_count_blocks(const Piece *piece){
+//A função recebe uma peça e devolve quantos 1 existem na matriz dela. O quadrado 2x2 devolve 4, o L devolve 4, o ponto devolve 1
+
+int piece_count_blocks(const Piece *piece){  
     int total = 0;
 
     for(int i = 0; i < PIECE_SIZE; i++){
@@ -182,4 +184,19 @@ int piece_count_blocks(const Piece *piece){
         }
     }
     return total;
+}
+
+//Quem for centralizar a peça na tela ou no mouse durante o arrasto vai precisar desses números.
+
+int piece_height(const Piece *piece){       
+    int maxRow = -1;
+
+    for(int i = 0; i < PIECE_SIZE; i++){
+        for(int j = 0; j < PIECE_SIZE; j++){
+            if(piece->shape[i][j] == 1 && i > maxRow){
+                maxRow = i;
+            }
+        }
+    }
+    return maxRow + 1;
 }
