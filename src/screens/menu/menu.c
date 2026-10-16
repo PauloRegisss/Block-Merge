@@ -31,7 +31,7 @@ void menu_draw(void) {
         150, 1.5f, (Color){90, 232, 180, 255});
 
     Rectangle button = get_start_button();
-    DrawRectangleRec(button, (Color){255, 211, 89, 255});
+    DrawRectangleRounded(button, 0.2f, 4, (Color){255, 211, 89, 255});
 
     const char *text = "JOGAR";
     const float fontSize = 36.0f;

@@ -1,21 +1,22 @@
-#include "board.h"
 #include "fonts.h"
 #include "menu.h"
 #include "raylib.h"
 #include "screen.h"
-#include <curses.h>
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 #define TAMANHO_CELULA 60 // numeros da grade
 #define ESPACO 4
 
 int main(void) {
-    SetConfigFlags(FLAG_FULLSCREEN_MODE);
-    InitWindow(80, 80, "Block Merge");
+    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
+
+    int monitor = GetCurrentMonitor();
+    int screenWidth = GetMonitorWidth(monitor);
+    int screenHeight = GetMonitorHeight(monitor);
+
+    InitWindow(screenWidth, screenHeight, "Block Merge");
     SetTargetFPS(60);
     LoadFonts();
-    SetTextureFilter(FontTitle.texture, TEXTURE_FILTER_BILINEAR);
-    SetTextureFilter(FontRegular.texture, TEXTURE_FILTER_BILINEAR);
     GameScreen screen = SCREEN_MENU; // inicia o jogo no menu
 
     // Rectangle bottom; // declarei uma variavel bottom do tipo Rectangle
@@ -38,6 +39,12 @@ int main(void) {
         }
         BeginDrawing();
         ClearBackground((Color){17, 24, 43, 255});
+
+        Vector2 textSize = MeasureTextEx(FontRegular, "© 2026 Block Merge", 16.0f, 1.0f);
+        DrawTextEx(FontRegular, "© 2026 Block Merge",
+                   (Vector2){(float)GetScreenWidth() - textSize.x - 16.0f,
+                             (float)GetScreenHeight() - textSize.y - 16.0f},
+                   16.0f, 1.0f, (Color){140, 150, 170, 160});
         switch (screen) {
             case SCREEN_MENU:
                 menu_draw();
