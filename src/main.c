@@ -10,24 +10,24 @@
 #define ESPACO 4
 
 int main(void) {
-    InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Block Merge");
-    // SetWindowPosition(100, 100);
+    SetConfigFlags(FLAG_FULLSCREEN_MODE);
+    InitWindow(80, 80, "Block Merge");
     SetTargetFPS(60);
     LoadFonts();
     SetTextureFilter(FontTitle.texture, TEXTURE_FILTER_BILINEAR);
     SetTextureFilter(FontRegular.texture, TEXTURE_FILTER_BILINEAR);
     GameScreen screen = SCREEN_MENU; // inicia o jogo no menu
 
-    Rectangle bottom; // declarei uma variavel bottom do tipo Rectangle
-                      // (retangulo)
-    bottom = (Rectangle){(WINDOW_WIDTH - 200) / 2, 400, 200, 60};
+    // Rectangle bottom; // declarei uma variavel bottom do tipo Rectangle
+    //                   // (retangulo)
+    // bottom = (Rectangle){(WINDOW_WIDTH - 200) / 2, 400, 200, 60};
 
-    Board board;        // troquei a int matriz[8][8]
-    board_init(&board); // & = "passa o endereço do board"
-    board_set(&board, 6, 7, 1);
-    int larguraGrade = BOARD_SIZE * TAMANHO_CELULA + (BOARD_SIZE - 1) * ESPACO;
-    int origemX = (WINDOW_WIDTH - larguraGrade) / 2;
-    int origemY = 40;
+    // Board board;        // troquei a int matriz[8][8]
+    // board_init(&board); // & = "passa o endereço do board"
+    // board_set(&board, 6, 7, 1);
+    // int larguraGrade = BOARD_SIZE * TAMANHO_CELULA + (BOARD_SIZE - 1) * ESPACO;
+    // int origemX = (WINDOW_WIDTH - larguraGrade) / 2;
+    // int origemY = 40;
 
     while (!WindowShouldClose()) {
 

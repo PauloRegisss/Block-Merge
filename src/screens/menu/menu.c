@@ -15,10 +15,16 @@ GameScreen menu_update(void) {
 void menu_draw(void) {
     ClearBackground((Color){17, 24, 43, 255});
 
-    DrawTextEx(FontTitle, "BLOCK", (Vector2){280, 200}, 150, 1.5f, RAYWHITE);
-    DrawTextEx(FontTitle, "MERGE", (Vector2){280, 300}, 150, 1.5f, (Color){90, 232, 180, 255});
-
-    // DrawRectangleRounded(FontTitle, startButton, 0.3f, 8, BLUE);
+    DrawTextEx(
+        FontTitle, "BLOCK",
+        (Vector2){(float)(GetScreenWidth() - 280) / 2.0f, (float)(GetScreenHeight() - 200) / 2.0f},
+        150, 1.5f, RAYWHITE);
+    DrawTextEx(
+        FontTitle, "MERGE",
+        (Vector2){(float)(GetScreenWidth() - 280) / 2.0f, (float)(GetScreenHeight() - 300) / 2.0f},
+        150, 1.5f, (Color){90, 232, 180, 255});
+    DrawRectangleRec(startButton, (Color){255, 211, 89, 255});
+    // DrawRectangleRoundedLinesEx(FontTitle, startButton, 0.3f, 8, BLUE);
 
     DrawText("Start", 365, 418, 30, WHITE);
 }
