@@ -32,6 +32,15 @@ int main(void) {
     Board board;
     board_init(&board);
     board_set(&board, 6, 7, 1); // desenho na matriz no canto inferior
+    
+
+    // preenche a linha 7 inteira para testar a eliminação
+    for (int j = 0; j < BOARD_SIZE; j++) {
+        board_set(&board, 7, j, 1);
+    }
+
+    int eliminadas = board_clear_lines(&board);
+    (void)eliminadas;
 
     while (!WindowShouldClose()) {
 
