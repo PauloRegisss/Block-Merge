@@ -2,18 +2,22 @@
 #include "menu.h"
 #include "raylib.h"
 #include "screen.h"
+#include "board.h"
 #define ESPACO 4
 
 int main(void) {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
-    InitWindow(screenWidth, screenHeight, "Block Merge");
 
+    InitWindow(800, 600, "Block Merge");
     int monitor = GetCurrentMonitor();
-    int screenWidth = GetMonitorWidth(monitor);
-    int screenHeight = GetMonitorHeight(monitor);
+    SetWindowSize(GetMonitorWidth(monitor), GetMonitorHeight(monitor));
+    SetWindowPosition(0, 0);
+    
     SetTargetFPS(60);
     LoadFonts();
     GameScreen screen = SCREEN_MENU;
+
+
     /*
     Rectangle bottom; // declarei uma variavel bottom do tipo Rectangle
                        // (retangulo)
@@ -25,6 +29,9 @@ int main(void) {
     int larguraGrade = BOARD_SIZE * TAMANHO_CELULA + (BOARD_SIZE - 1) * ESPACO;
     int origemX = (WINDOW_WIDTH - larguraGrade) / 2;
     int origemY = 40;*/
+    Board board;
+    board_init(&board);
+    board_set(&board, 6, 7, 1); // desenho na matriz no canto inferior
 
     while (!WindowShouldClose()) {
 
@@ -37,7 +44,7 @@ int main(void) {
         ClearBackground((Color){17, 24, 43, 255});
 
         Vector2 textSize = MeasureTextEx(FontRegular, "© 2026 Block Merge", 16.0f, 1.0f);
-        DrawTextEx(FontRegular, "© 2026 Block Merge",
+        DrawTextEx(FontRegular, " 2026 Block Merge",
                    (Vector2){(float)GetScreenWidth() - textSize.x - 16.0f,
                              (float)GetScreenHeight() - textSize.y - 16.0f},
                    16.0f, 1.0f, (Color){140, 150, 170, 160});
@@ -46,24 +53,6 @@ int main(void) {
                 menu_draw();
                 break;
         }
-        // } else {
-        //   // os for ficam aqui dentro: a grade só é desenhada na tela JOGANDO
-        //   for (int i = 0; i < BOARD_SIZE; i++){       //troquei 8 por BOARD_SIZE
-        //     for (int j = 0; j < BOARD_SIZE; j++){     //troquei 8 por BOARD_SIZE
-        //       int x = origemX +  j * (TAMANHO_CELULA + ESPACO);
-        //       int y = origemY + i * (TAMANHO_CELULA+ ESPACO);
-
-        //       Color cor;
-
-        //       if(board.cells[i][j] == 0){ //troquei matriz por board.cells
-        //         cor = (Color) {100, 100, 100, 255};
-        //       } else{
-        //         cor = PURPLE;
-        //       }
-        //       DrawRectangle(x, y, TAMANHO_CELULA, TAMANHO_CELULA, cor);
-        //     }
-        //   }
-        // }
 
         EndDrawing();
     }

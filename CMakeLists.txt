@@ -29,6 +29,8 @@ set(PROJECT_SOURCES
     src/game.c
     src/board.c
     src/piece.c
+    src/screens/fonts/fonts.c
+    src/screens/menu/menu.c
 )
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
@@ -37,6 +39,9 @@ target_include_directories(${PROJECT_NAME}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/screens
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/screens/fonts
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/screens/menu
 )
 
 target_link_libraries(${PROJECT_NAME}
