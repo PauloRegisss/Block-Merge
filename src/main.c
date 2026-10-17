@@ -6,12 +6,11 @@
 
 int main(void) {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
+    InitWindow(screenWidth, screenHeight, "Block Merge");
 
     int monitor = GetCurrentMonitor();
     int screenWidth = GetMonitorWidth(monitor);
     int screenHeight = GetMonitorHeight(monitor);
-
-    InitWindow(screenWidth, screenHeight, "Block Merge");
     SetTargetFPS(60);
     LoadFonts();
     GameScreen screen = SCREEN_MENU;
@@ -38,7 +37,7 @@ int main(void) {
         ClearBackground((Color){17, 24, 43, 255});
 
         Vector2 textSize = MeasureTextEx(FontRegular, "© 2026 Block Merge", 16.0f, 1.0f);
-        DrawTextEx(FontRegular, "@ 2026 Block Merge",
+        DrawTextEx(FontRegular, "© 2026 Block Merge",
                    (Vector2){(float)GetScreenWidth() - textSize.x - 16.0f,
                              (float)GetScreenHeight() - textSize.y - 16.0f},
                    16.0f, 1.0f, (Color){140, 150, 170, 160});

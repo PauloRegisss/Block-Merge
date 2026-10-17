@@ -173,7 +173,7 @@ void piece_draw(const Piece *piece, int x, int y, int cellSize, int gap) {
 
 //A função recebe uma peça e devolve quantos 1 existem na matriz dela. O quadrado 2x2 devolve 4, o L devolve 4, o ponto devolve 1
 
-int piece_count_blocks(const Piece *piece){  
+int piece_count_block(const Piece *piece){  
     int total = 0;
 
     for(int i = 0; i < PIECE_SIZE; i++){
