@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(BlockBlast
+project(BlockMerge
     VERSION 1.0.0
     DESCRIPTION "A 2D block puzzle game built with C and raylib"
     LANGUAGES C
