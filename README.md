@@ -106,15 +106,15 @@ cd Jogo-PIF
 cmake -S . -B build
 cmake --build build
 
-./build/BlockBlast
+./build/BlockMerge
 ```
 
-> No Windows, o executável fica em `build\BlockBlast.exe` (ou dentro de `build\Debug\` / `build\Release\`).
+> No Windows, o executável fica em `build\BlockMerge.exe` (ou dentro de `build\Debug\` / `build\Release\`).
 
 ## 👤 Alunos
 
 **Paulo César Regis de Lima** 
 
-**Pedro Antonio Beltrao Rihan** 
+**Pedro Antonio Beltrão Rihan** 
 
 **Ricardo Marinho do Prado** 
