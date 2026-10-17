@@ -188,7 +188,7 @@ int piece_count_blocks(const Piece *piece){
 
 //Quem for centralizar a peça na tela ou no mouse durante o arrasto vai precisar desses números.
 
-int piece_height(const Piece *piece){       
+int piece_height(const Piece *piece){     
     int maxRow = -1;
 
     for(int i = 0; i < PIECE_SIZE; i++){

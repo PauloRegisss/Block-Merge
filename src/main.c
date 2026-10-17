@@ -15,17 +15,17 @@ int main(void) {
     SetTargetFPS(60);
     LoadFonts();
     GameScreen screen = SCREEN_MENU;
+    /*
+    Rectangle bottom; // declarei uma variavel bottom do tipo Rectangle
+                       // (retangulo)
+    bottom = (Rectangle){(WINDOW_WIDTH - 200) / 2, 400, 200, 60};
 
-    // Rectangle bottom; // declarei uma variavel bottom do tipo Rectangle
-    //                   // (retangulo)
-    // bottom = (Rectangle){(WINDOW_WIDTH - 200) / 2, 400, 200, 60};
-
-    // Board board;        // troquei a int matriz[8][8]
-    // board_init(&board); // & = "passa o endereço do board"
-    // board_set(&board, 6, 7, 1);
-    // int larguraGrade = BOARD_SIZE * TAMANHO_CELULA + (BOARD_SIZE - 1) * ESPACO;
-    // int origemX = (WINDOW_WIDTH - larguraGrade) / 2;
-    // int origemY = 40;
+    Board board;        // troquei a int matriz[8][8]
+    board_init(&board); // & = "passa o endereço do board"
+    board_set(&board, 6, 7, 1);
+    int larguraGrade = BOARD_SIZE * TAMANHO_CELULA + (BOARD_SIZE - 1) * ESPACO;
+    int origemX = (WINDOW_WIDTH - larguraGrade) / 2;
+    int origemY = 40;*/
 
     while (!WindowShouldClose()) {
 
