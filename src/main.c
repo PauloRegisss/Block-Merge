@@ -12,7 +12,7 @@ int main(void) {
     int monitor = GetCurrentMonitor();
     SetWindowSize(GetMonitorWidth(monitor), GetMonitorHeight(monitor));
     SetWindowPosition(0, 0);
-    
+
     SetTargetFPS(60);
     LoadFonts();
     GameScreen screen = SCREEN_MENU;
@@ -44,7 +44,7 @@ int main(void) {
         ClearBackground((Color){17, 24, 43, 255});
 
         Vector2 textSize = MeasureTextEx(FontRegular, "© 2026 Block Merge", 16.0f, 1.0f);
-        DrawTextEx(FontRegular, " 2026 Block Merge",
+        DrawTextEx(FontRegular, "© 2026 Block Merge",
                    (Vector2){(float)GetScreenWidth() - textSize.x - 16.0f,
                              (float)GetScreenHeight() - textSize.y - 16.0f},
                    16.0f, 1.0f, (Color){140, 150, 170, 160});
@@ -52,7 +52,17 @@ int main(void) {
             case SCREEN_MENU:
                 menu_draw();
                 break;
-        }
+            case SCREEN_GAMEPLAY: {
+                int cellSize = 60;
+                int larguraGrade = BOARD_SIZE * cellSize + (BOARD_SIZE - 1) * ESPACO;
+                int origemX = (GetScreenWidth() - larguraGrade) / 2;
+                int origemY = 40;
+                board_draw(&board, origemX, origemY, cellSize, ESPACO);
+                break;
+            }
+            default:
+                break;
+}
 
         EndDrawing();
     }
