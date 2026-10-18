@@ -15,5 +15,6 @@ Color piece_get_color(const Piece *piece);
 void  piece_draw(const Piece *piece, int x, int y, int cellSize, int gap);
 int piece_count_block(const Piece *piece);
 int piece_height(const Piece *piece);
+int piece_width(const Piece *piece);
 
 #endif

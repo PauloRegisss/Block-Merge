@@ -200,3 +200,16 @@ int piece_height(const Piece *piece){
     }
     return maxRow + 1;
 }
+
+int piece_width(const Piece *piece){     
+    int maxcolumn = -1;
+
+    for(int i = 0; i < PIECE_SIZE; i++){
+        for(int j = 0; j < PIECE_SIZE; j++){
+            if(piece->shape[i][j] == 1 && j > maxcolumn){
+                maxcolumn = j;
+            }
+        }
+    }
+    return maxcolumn + 1;
+}
