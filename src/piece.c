@@ -157,8 +157,7 @@ void piece_draw(const Piece *piece, int x, int y, int cellSize, int gap) {
     for (int i = 0; i < PIECE_SIZE; i++) {
         for (int j = 0; j < PIECE_SIZE; j++) {
             if (piece->shape[i][j] == 1) {
-                DrawRectangle(x + j * (cellSize + gap), y + i * (cellSize + gap), cellSize,
-                              cellSize, cor);
+                DrawRectangle(x + j * (cellSize + gap), y + i * (cellSize + gap), cellSize, cellSize, cor);
             }
         }
     }
@@ -205,4 +204,11 @@ int piece_width(const Piece *piece){
         }
     }
     return maxcolumn + 1;
+}
+
+Color piece_color_from_index(int colorIndex) {
+    if (colorIndex < 0 || colorIndex >= PALETTE_COUNT) {
+        return MAGENTA;   // cor de aviso: se aparecer na tela, tem índice inválido
+    }
+    return PALETTE[colorIndex];
 }
