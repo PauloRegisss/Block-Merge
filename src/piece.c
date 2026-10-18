@@ -27,7 +27,7 @@ Color piece_get_color(const Piece *piece) {
     return PALETTE[piece->colorIndex];
 }
 
-#define SHAPE_COUNT 16
+#define SHAPE_COUNT 15
 
 
 static const int SHAPES[SHAPE_COUNT][PIECE_SIZE][PIECE_SIZE] = {
@@ -76,13 +76,6 @@ static const int SHAPES[SHAPE_COUNT][PIECE_SIZE][PIECE_SIZE] = {
     // 6. Linha horizontal 2
     {
         {1, 1, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-    },
-
-    // 7. Linha horizontal 4 (limitada a 3x3: usar matriz maior)
-    {
-        {1, 1, 1},
         {0, 0, 0},
         {0, 0, 0},
     },
@@ -139,14 +132,14 @@ static const int SHAPES[SHAPE_COUNT][PIECE_SIZE][PIECE_SIZE] = {
     // 15. J pequeno
     {
         {0, 1, 0},
-        {0, 1, 1},
+        {1, 1, 0},
         {0, 0, 0},
     },
 };
 
 Piece piece_create_random(void) {
     Piece piece;
-    int s = GetRandomValue(0, SHAPE_COUNT - 1); // valor aleatorio de 0 a 15
+    int s = GetRandomValue(0, SHAPE_COUNT - 1); // valor aleatorio de 0 a 14
 
     for (int i = 0; i < PIECE_SIZE; i++) {
         for (int j = 0; j < PIECE_SIZE; j++) {
