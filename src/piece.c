@@ -24,7 +24,7 @@ Piece piece_create(void) {
 }
 
 Color piece_get_color(const Piece *piece) {
-    return PALETTE[piece->colorIndex];
+    return piece_color_from_index(piece->colorIndex);
 }
 
 #define SHAPE_COUNT 15
@@ -208,7 +208,7 @@ int piece_width(const Piece *piece){
 
 Color piece_color_from_index(int colorIndex) {
     if (colorIndex < 0 || colorIndex >= PALETTE_COUNT) {
-        return MAGENTA;   // cor de aviso: se aparecer na tela, tem índice inválido
+        return MAGENTA;   // cor de aviso, se aparecer na tela, tem índice inválido.
     }
     return PALETTE[colorIndex];
 }
