@@ -19,7 +19,7 @@ int main(void) {
 
     Music musicaFundo = LoadMusicStream("assets/audio/musica_fundo.wav");  
     musicaFundo.looping = true;                             
-    SetMusicVolume(musicaFundo, 0.4f);                     
+    SetMusicVolume(musicaFundo, 0.8f);                     
     TraceLog(LOG_INFO, "musica valida: %d", IsMusicValid(musicaFundo));   
 
     GameScreen screen = SCREEN_MENU;
