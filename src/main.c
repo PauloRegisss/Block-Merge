@@ -9,12 +9,19 @@ int main(void) {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
 
     InitWindow(800, 600, "Block Merge");
+    InitAudioDevice();                                    
     int monitor = GetCurrentMonitor();
     SetWindowSize(GetMonitorWidth(monitor), GetMonitorHeight(monitor));
     SetWindowPosition(0, 0);
 
     SetTargetFPS(60);
     LoadFonts();
+
+    Music musicaFundo = LoadMusicStream("assets/audio/musica_fundo.wav");  
+    musicaFundo.looping = true;                             
+    SetMusicVolume(musicaFundo, 0.4f);                     
+    TraceLog(LOG_INFO, "musica valida: %d", IsMusicValid(musicaFundo));   
+
     GameScreen screen = SCREEN_MENU;
 
 
@@ -32,7 +39,6 @@ int main(void) {
     Board board;
     board_init(&board);
     board_set(&board, 6, 7, 1); // desenho na matriz no canto inferior
-    
 
     // preenche a linha 7 inteira para testar a eliminação
     for (int j = 0; j < BOARD_SIZE; j++) {
@@ -43,11 +49,24 @@ int main(void) {
     (void)eliminadas;
 
     while (!WindowShouldClose()) {
+        UpdateMusicStream(musicaFundo);                       
+        GameScreen telaAnterior = screen;                     
 
         switch (screen) {
             case SCREEN_MENU:
                 screen = menu_update();
                 break;
+            case SCREEN_GAMEPLAY:                          
+                if (IsKeyPressed(KEY_G)) screen = SCREEN_GAME_OVER;
+                break;
+            default:
+                break;
+        }
+        if(telaAnterior == SCREEN_MENU && screen == SCREEN_GAMEPLAY){   
+            PlayMusicStream(musicaFundo);
+        }
+        if(telaAnterior != SCREEN_GAME_OVER && screen == SCREEN_GAME_OVER){  
+            StopMusicStream(musicaFundo);
         }
         BeginDrawing();
         ClearBackground((Color){17, 24, 43, 255});
@@ -67,7 +86,7 @@ int main(void) {
                 int origemX = (GetScreenWidth() - larguraGrade) / 2;
                 int origemY = 40;
                 board_draw(&board, origemX, origemY, cellSize, ESPACO);
-                break;
+                break;                                       
             }
             default:
                 break;
@@ -76,7 +95,8 @@ int main(void) {
         EndDrawing();
     }
     UnloadFonts();
+    UnloadMusicStream(musicaFundo);                          
+    CloseAudioDevice();                                       
     CloseWindow();
-
     return 0;
 }

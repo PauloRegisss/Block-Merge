@@ -30,7 +30,7 @@ void board_draw(const Board *board, int x, int y, int cellSize, int gap) { //tro
                                 // os for ficam aqui dentro: a grade só é desenhada na tela JOGANDO
     for (int i = 0; i < BOARD_SIZE; i++) { 
         for (int j = 0; j < BOARD_SIZE; j++) {
-            int cx = x + j * (cellSize + gap);
+            int cx = x + j* (cellSize + gap);
             int cy = y + i * (cellSize + gap);
             Color cor;
             if (board->cells[i][j] == 0) { // matriz é board.cells agr
@@ -51,7 +51,7 @@ bool board_can_place(const Board *board, const Piece *piece, int row, int col) {
                 return false;
             }
         }
-    }
+    }       
     return true;
 }
 
