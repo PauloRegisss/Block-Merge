@@ -26,22 +26,45 @@ endif()
 
 set(PROJECT_SOURCES
     src/main.c
-    src/game.c
-    src/board.c
-    src/piece.c
+    src/game/game.c
+    src/game/board.c
+    src/materials/piece.c
     src/screens/fonts/fonts.c
     src/screens/menu/menu.c
 )
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
 
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(test_piece_catalog
+        tests/test_piece_catalog.c
+        src/materials/piece.c
+    )
+    target_include_directories(test_piece_catalog PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(test_piece_catalog PRIVATE raylib)
+    add_test(NAME piece_catalog COMMAND test_piece_catalog)
+
+    add_executable(test_piece_offer
+        tests/test_piece_offer.c
+        src/game/board.c
+        src/game/game.c
+        src/materials/piece.c
+    )
+    target_include_directories(test_piece_offer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(test_piece_offer PRIVATE raylib)
+    add_test(NAME piece_offer COMMAND test_piece_offer)
+endif()
+
 target_include_directories(${PROJECT_NAME}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/game
         ${CMAKE_CURRENT_SOURCE_DIR}/src/screens
         ${CMAKE_CURRENT_SOURCE_DIR}/src/screens/fonts
         ${CMAKE_CURRENT_SOURCE_DIR}/src/screens/menu
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/screens/materials
 )
 
 target_link_libraries(${PROJECT_NAME}

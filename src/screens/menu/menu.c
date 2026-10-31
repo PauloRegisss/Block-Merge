@@ -20,7 +20,6 @@ GameScreen menu_update(void) {
         IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         return SCREEN_GAMEPLAY;
     }
-
     return SCREEN_MENU;
 }
 

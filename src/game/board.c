@@ -1,36 +1,37 @@
-#include "raylib.h"
 #include "board.h"
+#include "raylib.h"
 
-void board_init(Board *board){
-    for (int i = 0; i < BOARD_SIZE; i++){
-        for (int j = 0; j < BOARD_SIZE; j++){
+void board_init(Board *board) {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
             board->cells[i][j] = 0;
         }
     }
 }
 
-bool board_in_bounds(int row, int col){
+bool board_in_bounds(int row, int col) {
     return row >= 0 && row < BOARD_SIZE && col >= 0 && col < BOARD_SIZE;
 }
 
-bool board_is_empty(const Board *board, int row, int col){
-    if(!board_in_bounds(row, col)){
+bool board_is_empty(const Board *board, int row, int col) {
+    if (!board_in_bounds(row, col)) {
         return false;
     }
     return board->cells[row][col] == 0;
 }
 
 void board_set(Board *board, int row, int col, int value) {
-    if(board_in_bounds(row, col)){
+    if (board_in_bounds(row, col)) {
         board->cells[row][col] = value;
     }
 }
 
-void board_draw(const Board *board, int x, int y, int cellSize, int gap) { //troquei 8 por BOARD_SIZE
-                                // os for ficam aqui dentro: a grade só é desenhada na tela JOGANDO
-    for (int i = 0; i < BOARD_SIZE; i++) { 
+void board_draw(const Board *board, int x, int y, int cellSize,
+                int gap) { // troquei 8 por BOARD_SIZE
+    // os for ficam aqui dentro: a grade só é desenhada na tela JOGANDO
+    for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
-            int cx = x + j* (cellSize + gap);
+            int cx = x + j * (cellSize + gap);
             int cy = y + i * (cellSize + gap);
             Color cor;
             if (board->cells[i][j] == 0) { // matriz é board.cells agr
@@ -51,7 +52,7 @@ bool board_can_place(const Board *board, const Piece *piece, int row, int col) {
                 return false;
             }
         }
-    }       
+    }
     return true;
 }
 
@@ -79,7 +80,7 @@ int board_clear_lines(Board *board) {
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
             if (board->cells[i][j] == 0) {
-                linhaCheia[i] = false; // a linha i tem um buraco
+                linhaCheia[i] = false;  // a linha i tem um buraco
                 colunaCheia[j] = false; // a coluna j tem um buraco
             }
         }
@@ -96,8 +97,10 @@ int board_clear_lines(Board *board) {
 
     // Conta quantas linhas e colunas foram eliminadas
     for (int i = 0; i < BOARD_SIZE; i++) {
-        if (linhaCheia[i]) total++;
-        if (colunaCheia[i]) total++;
+        if (linhaCheia[i])
+            total++;
+        if (colunaCheia[i])
+            total++;
     }
 
     return total;

@@ -1,15 +1,15 @@
+#include "board.h"
 #include "fonts.h"
 #include "menu.h"
 #include "raylib.h"
 #include "screen.h"
-#include "board.h"
 #define ESPACO 4
 
 int main(void) {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
 
     InitWindow(800, 600, "Block Merge");
-    InitAudioDevice();                                    
+    InitAudioDevice();
     int monitor = GetCurrentMonitor();
     SetWindowSize(GetMonitorWidth(monitor), GetMonitorHeight(monitor));
     SetWindowPosition(0, 0);
@@ -17,13 +17,12 @@ int main(void) {
     SetTargetFPS(60);
     LoadFonts();
 
-    Music musicaFundo = LoadMusicStream("assets/audio/musica_fundo.wav");  
-    musicaFundo.looping = true;                             
-    SetMusicVolume(musicaFundo, 0.8f);                     
-    TraceLog(LOG_INFO, "musica valida: %d", IsMusicValid(musicaFundo));   
+    Music musicaFundo = LoadMusicStream("assets/audio/musica_fundo.wav");
+    musicaFundo.looping = true;
+    SetMusicVolume(musicaFundo, 0.8f);
+    TraceLog(LOG_INFO, "musica valida: %d", IsMusicValid(musicaFundo));
 
     GameScreen screen = SCREEN_MENU;
-
 
     /*
     Rectangle bottom; // declarei uma variavel bottom do tipo Rectangle
@@ -49,23 +48,24 @@ int main(void) {
     (void)eliminadas;
 
     while (!WindowShouldClose()) {
-        UpdateMusicStream(musicaFundo);                       
-        GameScreen telaAnterior = screen;                     
+        UpdateMusicStream(musicaFundo);
+        GameScreen telaAnterior = screen;
 
         switch (screen) {
             case SCREEN_MENU:
                 screen = menu_update();
                 break;
-            case SCREEN_GAMEPLAY:                          
-                if (IsKeyPressed(KEY_G)) screen = SCREEN_GAME_OVER;
+            case SCREEN_GAMEPLAY:
+                if (IsKeyPressed(KEY_G))
+                    screen = SCREEN_GAME_OVER;
                 break;
             default:
                 break;
         }
-        if(telaAnterior == SCREEN_MENU && screen == SCREEN_GAMEPLAY){   
+        if (telaAnterior == SCREEN_MENU && screen == SCREEN_GAMEPLAY) {
             PlayMusicStream(musicaFundo);
         }
-        if(telaAnterior != SCREEN_GAME_OVER && screen == SCREEN_GAME_OVER){  
+        if (telaAnterior != SCREEN_GAME_OVER && screen == SCREEN_GAME_OVER) {
             StopMusicStream(musicaFundo);
         }
         BeginDrawing();
@@ -86,17 +86,17 @@ int main(void) {
                 int origemX = (GetScreenWidth() - larguraGrade) / 2;
                 int origemY = 40;
                 board_draw(&board, origemX, origemY, cellSize, ESPACO);
-                break;                                       
+                break;
             }
             default:
                 break;
-}
+        }
 
         EndDrawing();
     }
     UnloadFonts();
-    UnloadMusicStream(musicaFundo);                          
-    CloseAudioDevice();                                       
+    UnloadMusicStream(musicaFundo);
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }

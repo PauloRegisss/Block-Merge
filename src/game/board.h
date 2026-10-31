@@ -1,7 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include "piece.h" // trabalhar com a struct Piece e PIECE_SIZE
+#include "materials/piece.h"
 #include <stdbool.h>
 
 #define BOARD_SIZE 8
@@ -12,7 +12,7 @@ typedef struct {
 } Board;
 
 void board_init(Board *board); // percorre os 64 blocos e zera todos, modifica o board original
-bool board_in_bounds(int row, int col); // 
+bool board_in_bounds(int row, int col); //
 bool board_is_empty(const Board *board, int row, int col);
 void board_set(Board *board, int row, int col, int value);
 void board_draw(const Board *board, int x, int y, int cellSize, int gap);

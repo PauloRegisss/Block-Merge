@@ -1,5 +1,7 @@
 #include "piece.h"
 
+#include <stddef.h>
+
 #define PALETTE_COUNT 4
 
 // As cores do design.pen: mint, yellow, coral, sky
@@ -27,10 +29,7 @@ Color piece_get_color(const Piece *piece) {
     return piece_color_from_index(piece->colorIndex);
 }
 
-#define SHAPE_COUNT 15
-
-
-static const int SHAPES[SHAPE_COUNT][PIECE_SIZE][PIECE_SIZE] = {
+static const int SHAPES[PIECE_SHAPE_COUNT][PIECE_SIZE][PIECE_SIZE] = {
     // 0. Quadrado 2x2
     {
         {1, 1, 0},
@@ -137,17 +136,25 @@ static const int SHAPES[SHAPE_COUNT][PIECE_SIZE][PIECE_SIZE] = {
     },
 };
 
-Piece piece_create_random(void) {
-    Piece piece;
-    int s = GetRandomValue(0, SHAPE_COUNT - 1); // valor aleatorio de 0 a 14
+bool piece_create_from_shape(int shapeIndex, Piece *piece) {
+    if (piece == NULL || shapeIndex < 0 || shapeIndex >= PIECE_SHAPE_COUNT) {
+        return false;
+    }
 
     for (int i = 0; i < PIECE_SIZE; i++) {
         for (int j = 0; j < PIECE_SIZE; j++) {
-            piece.shape[i][j] = SHAPES[s][i][j];
+            piece->shape[i][j] = SHAPES[shapeIndex][i][j];
         }
     }
 
-    piece.colorIndex = GetRandomValue(0, PALETTE_COUNT - 1); // gera um valor aleatorio
+    piece->colorIndex = GetRandomValue(0, PALETTE_COUNT - 1);
+    return true;
+}
+
+Piec e piece_create_random(void) {
+    Piece piece = {0};
+    int shapeIndex = GetRandomValue(0, PIECE_SHAPE_COUNT - 1);
+    piece_create_from_shape(shapeIndex, &piece);
     return piece;
 }
 
@@ -157,20 +164,22 @@ void piece_draw(const Piece *piece, int x, int y, int cellSize, int gap) {
     for (int i = 0; i < PIECE_SIZE; i++) {
         for (int j = 0; j < PIECE_SIZE; j++) {
             if (piece->shape[i][j] == 1) {
-                DrawRectangle(x + j * (cellSize + gap), y + i * (cellSize + gap), cellSize, cellSize, cor);
+                DrawRectangle(x + j * (cellSize + gap), y + i * (cellSize + gap), cellSize,
+                              cellSize, cor);
             }
         }
     }
 }
 
-//A função recebe uma peça e devolve quantos 1 existem na matriz dela. O quadrado 2x2 devolve 4, o L devolve 4, o ponto devolve 1
+// A função recebe uma peça e devolve quantos 1 existem na matriz dela. O quadrado 2x2 devolve 4, o
+// L devolve 4, o ponto devolve 1
 
-int piece_count_block(const Piece *piece){  
+int piece_count_block(const Piece *piece) {
     int total = 0;
 
-    for(int i = 0; i < PIECE_SIZE; i++){
-        for(int j = 0; j < PIECE_SIZE; j++){
-            if(piece->shape[i][j] == 1){
+    for (int i = 0; i < PIECE_SIZE; i++) {
+        for (int j = 0; j < PIECE_SIZE; j++) {
+            if (piece->shape[i][j] == 1) {
                 total++;
             }
         }
@@ -178,14 +187,14 @@ int piece_count_block(const Piece *piece){
     return total;
 }
 
-//Quem for centralizar a peça na tela ou no mouse durante o arrasto vai precisar desses números.
+// Quem for centralizar a peça na tela ou no mouse durante o arrasto vai precisar desses números.
 
-int piece_height(const Piece *piece){     
+int piece_height(const Piece *piece) {
     int maxRow = -1;
 
-    for(int i = 0; i < PIECE_SIZE; i++){
-        for(int j = 0; j < PIECE_SIZE; j++){
-            if(piece->shape[i][j] == 1 && i > maxRow){
+    for (int i = 0; i < PIECE_SIZE; i++) {
+        for (int j = 0; j < PIECE_SIZE; j++) {
+            if (piece->shape[i][j] == 1 && i > maxRow) {
                 maxRow = i;
             }
         }
@@ -193,12 +202,12 @@ int piece_height(const Piece *piece){
     return maxRow + 1;
 }
 
-int piece_width(const Piece *piece){     
+int piece_width(const Piece *piece) {
     int maxcolumn = -1;
 
-    for(int i = 0; i < PIECE_SIZE; i++){
-        for(int j = 0; j < PIECE_SIZE; j++){
-            if(piece->shape[i][j] == 1 && j > maxcolumn){
+    for (int i = 0; i < PIECE_SIZE; i++) {
+        for (int j = 0; j < PIECE_SIZE; j++) {
+            if (piece->shape[i][j] == 1 && j > maxcolumn) {
                 maxcolumn = j;
             }
         }
@@ -208,7 +217,7 @@ int piece_width(const Piece *piece){
 
 Color piece_color_from_index(int colorIndex) {
     if (colorIndex < 0 || colorIndex >= PALETTE_COUNT) {
-        return MAGENTA;   // cor de aviso, se aparecer na tela, tem índice inválido.
+        return MAGENTA; // cor de aviso, se aparecer na tela, tem índice inválido.
     }
     return PALETTE[colorIndex];
 }
