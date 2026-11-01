@@ -3,17 +3,9 @@
 
 #include "board.h"
 
-
 #include <stdbool.h>
 
 #define PIECE_OFFER_SIZE 3
-
-typedef struct {
-    Board board;
-    PieceOffer offer;
-    int score;
-    bool game_over;
-} Game;
 
 typedef struct {
     Piece pieces[PIECE_OFFER_SIZE];
@@ -23,6 +15,7 @@ typedef struct {
 typedef struct {
     Board board;
     PieceOffer offer;
+    int score;
     bool game_over;
 } Game;
 
