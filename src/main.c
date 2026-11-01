@@ -1,14 +1,17 @@
+#include <time.h>
 #include "fonts.h"
 #include "menu.h"
 #include "raylib.h"
 #include "screen.h"
 #include "board.h"
+#include "game.h"
 #define ESPACO 4
 
 int main(void) {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
 
     InitWindow(800, 600, "Block Merge");
+    SetRandomSeed((unsigned int)time(NULL));
     InitAudioDevice();                                    
     int monitor = GetCurrentMonitor();
     SetWindowSize(GetMonitorWidth(monitor), GetMonitorHeight(monitor));
@@ -23,8 +26,7 @@ int main(void) {
     TraceLog(LOG_INFO, "musica valida: %d", IsMusicValid(musicaFundo));   
 
     GameScreen screen = SCREEN_MENU;
-
-
+    Game game;
     /*
     Rectangle bottom; // declarei uma variavel bottom do tipo Rectangle
                        // (retangulo)
@@ -36,17 +38,6 @@ int main(void) {
     int larguraGrade = BOARD_SIZE * TAMANHO_CELULA + (BOARD_SIZE - 1) * ESPACO;
     int origemX = (WINDOW_WIDTH - larguraGrade) / 2;
     int origemY = 40;*/
-    Board board;
-    board_init(&board);
-    board_set(&board, 6, 7, 1); // desenho na matriz no canto inferior
-
-    // preenche a linha 7 inteira para testar a eliminação
-    for (int j = 0; j < BOARD_SIZE; j++) {
-        board_set(&board, 7, j, 1);
-    }
-
-    int eliminadas = board_clear_lines(&board);
-    (void)eliminadas;
 
     while (!WindowShouldClose()) {
         UpdateMusicStream(musicaFundo);                       
@@ -57,12 +48,13 @@ int main(void) {
                 screen = menu_update();
                 break;
             case SCREEN_GAMEPLAY:                          
-                if (IsKeyPressed(KEY_G)) screen = SCREEN_GAME_OVER;
+                screen = game_update(&game);
                 break;
             default:
                 break;
         }
         if(telaAnterior == SCREEN_MENU && screen == SCREEN_GAMEPLAY){   
+            game_init(&game);
             PlayMusicStream(musicaFundo);
         }
         if(telaAnterior != SCREEN_GAME_OVER && screen == SCREEN_GAME_OVER){  
@@ -71,27 +63,22 @@ int main(void) {
         BeginDrawing();
         ClearBackground((Color){17, 24, 43, 255});
 
-        Vector2 textSize = MeasureTextEx(FontRegular, "© 2026 Block Merge", 16.0f, 1.0f);
-        DrawTextEx(FontRegular, "© 2026 Block Merge",
+        Vector2 textSize = MeasureTextEx(FontRegular, "(c) 2026 Block Merge", 16.0f, 1.0f);
+        DrawTextEx(FontRegular, "(c) 2026 Block Merge",
                    (Vector2){(float)GetScreenWidth() - textSize.x - 16.0f,
                              (float)GetScreenHeight() - textSize.y - 16.0f},
                    16.0f, 1.0f, (Color){140, 150, 170, 160});
         switch (screen) {
-            case SCREEN_MENU:
-                menu_draw();
-                break;
-            case SCREEN_GAMEPLAY: {
-                int cellSize = 60;
-                int larguraGrade = BOARD_SIZE * cellSize + (BOARD_SIZE - 1) * ESPACO;
-                int origemX = (GetScreenWidth() - larguraGrade) / 2;
-                int origemY = 40;
-                board_draw(&board, origemX, origemY, cellSize, ESPACO);
-                break;                                       
-            }
-            default:
-                break;
-}
-
+        case SCREEN_MENU:
+            menu_draw();
+            break;
+        case SCREEN_GAMEPLAY:
+            game_draw(&game);
+            break;
+        default:
+            break;
+        }
+    
         EndDrawing();
     }
     UnloadFonts();
