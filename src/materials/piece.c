@@ -151,7 +151,7 @@ bool piece_create_from_shape(int shapeIndex, Piece *piece) {
     return true;
 }
 
-Piec e piece_create_random(void) {
+Piece piece_create_random(void) {
     Piece piece = {0};
     int shapeIndex = GetRandomValue(0, PIECE_SHAPE_COUNT - 1);
     piece_create_from_shape(shapeIndex, &piece);

@@ -1,6 +1,9 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 
+#include "raylib.h"
+#include "board.h"
+#include "piece.h"
 #include "game.h"
 #include "screen.h"
 
