@@ -98,6 +98,18 @@ bool game_init(Game *game) {
     return true;
 }
 
+static int piece_cell_count(const Piece *piece) {
+    int count = 0;
+    for (int i = 0; i < PIECE_SIZE; i++) {
+        for (int j = 0; j < PIECE_SIZE; j++) {
+            if (piece->shape[i][j] == 1) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
 int game_place_piece(Game *game, int offer_index, int row, int col) {
     if (game == NULL || game->game_over || offer_index < 0 ||
         offer_index >= PIECE_OFFER_SIZE || game->offer.used[offer_index] ||
@@ -106,6 +118,7 @@ int game_place_piece(Game *game, int offer_index, int row, int col) {
     }
 
     board_place(&game->board, &game->offer.pieces[offer_index], row, col);
+    game->score += piece_cell_count(&game->offer.pieces[offer_index]);
     int clearedLines = board_clear_lines(&game->board);
     game->offer.used[offer_index] = true;
 
