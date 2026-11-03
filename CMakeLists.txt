@@ -27,6 +27,7 @@ endif()
 set(PROJECT_SOURCES
     src/main.c
     src/game/game.c
+    src/game/highscore.c
     src/game/board.c
     src/materials/piece.c
     src/screens/fonts/fonts.c
