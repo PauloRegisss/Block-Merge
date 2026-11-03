@@ -37,7 +37,7 @@ Combine estratégia e raciocínio lógico para aproveitar melhor o espaço dispo
 - [ ] **Leitura e escrita em arquivo**: salvar e carregar o top de pontuações
 - [ ] **Animações e movimento**: arrastar peça, animação de limpeza de linhas
 - [ ] **Tratamento de colisão**: peça × grade (encaixe válido) e peça × blocos ocupados
-- [x] Makefile / script / comando de compilação documentado
+- [x] Makefile / script / comando de compilação documentado (Linux, macOS e Windows)
 
 ### Funcionalidades do jogo
 
@@ -85,36 +85,65 @@ Block-Merge/
 ## 🚀 Como compilar e executar
 
 ### Pré-requisitos
+
 - Compilador C (GCC ou Clang)
 - CMake 3.22 ou superior
 - raylib instalada e encontrável pelo CMake
 
-```bash
-# Ubuntu/Debian
-sudo apt install build-essential cmake libraylib-dev
+**Ubuntu/Debian**
 
-# macOS
+```bash
+sudo apt install build-essential cmake libraylib-dev
+```
+
+**macOS**
+
+```bash
 brew install raylib cmake
 ```
+
+**Windows (MSYS2)**
+
+1. Instale o [MSYS2](https://www.msys2.org).
+2. Abra o terminal **MSYS2 UCRT64** e rode:
+
+```bash
+pacman -S --needed mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-ninja mingw-w64-ucrt-x86_64-raylib
+```
+
+3. Rode os comandos de build pelo próprio terminal **MSYS2 UCRT64**, ou adicione `C:\msys64\ucrt64\bin` ao PATH do Windows e reabra o terminal.
+
+Confira a instalação com `gcc --version` e `cmake --version`.
 
 ### Build e execução
 
 ```bash
 git clone <url-do-repositorio>
 cd Jogo-PIF
+```
 
+**Linux / macOS**
+
+```bash
 cmake -S . -B build
 cmake --build build
-
 ./build/BlockMerge
 ```
 
-> No Windows, o executável fica em `build\BlockMerge.exe` (ou dentro de `build\Debug\` / `build\Release\`).
+**Windows (MSYS2)**
+
+```bash
+cmake -S . -B build -G Ninja
+cmake --build build
+./build/BlockMerge.exe
+```
+
+> Se a configuração falhar com erro de gerador (por exemplo, `nmake`), apague a pasta `build` (`rmdir /s /q build` no CMD ou `rm -rf build` no MSYS2) e rode o `cmake -S . -B build -G Ninja` de novo.
 
 ## 👤 Alunos
 
-**Paulo César Régis de Lima** 
+**Paulo César Régis de Lima**
 
-**Pedro Antonio Beltrão Rihan** 
+**Pedro Antonio Beltrão Rihan**
 
-**Ricardo Marinho do Prado** 
+**Ricardo Marinho do Prado**
