@@ -18,7 +18,7 @@ Combine estratégia e raciocínio lógico para aproveitar melhor o espaço dispo
 
 | Ação           | Tecla / Mouse           |
 | -------------- | ----------------------- |
-| Arrastar peça  | `A definir`             |
+| Arrastar peça  | `Botão esq do mouse`    |
 | Voltar ao menu | `A definir`             |
 | Pausar         | `A definir`             |
 | Reiniciar      | `A definir`             |
@@ -30,28 +30,28 @@ Combine estratégia e raciocínio lógico para aproveitar melhor o espaço dispo
 - [x] Linguagem C, em linha de comando
 - [x] Biblioteca para jogos (raylib)
 - [x] **Matrizes**: grade 8×8 representada por `int matriz[8][8]`
-- [ ] **Estruturas (`struct`)**: peça, tabuleiro, estado do jogo
-- [ ] **Ponteiros**: passagem de tabuleiro/peças por referência nas funções
+- [x] **Estruturas (`struct`)**: peça, tabuleiro, estado do jogo
+- [x] **Ponteiros**: passagem de tabuleiro/peças por referência nas funções
 - [ ] **Alocação dinâmica de memória**: `malloc`/`free` para peças e nós
-- [ ] **Listas encadeadas**: ex.: fila de peças oferecidas e/ou ranking de pontuações
+- [x] **Listas encadeadas**: ex.: fila de peças oferecidas e/ou ranking de pontuações
 - [ ] **Leitura e escrita em arquivo**: salvar e carregar o top de pontuações
 - [ ] **Animações e movimento**: arrastar peça, animação de limpeza de linhas
 - [ ] **Tratamento de colisão**: peça × grade (encaixe válido) e peça × blocos ocupados
-- [ ] Makefile / script / comando de compilação documentado
+- [x] Makefile / script / comando de compilação documentado
 
 ### Funcionalidades do jogo
 
-- [x] Janela 800×800 com raylib
+- [x] Janela 1920×1080 com raylib
 - [x] Menu principal com botão **Start**
 - [x] Troca de tela (`MENU` → `JOGANDO`)
 - [x] Desenho da grade 8×8 a partir da matriz
-- [ ] Definição das peças (`piece.c`)
-- [ ] Lógica do tabuleiro: encaixe e eliminação de linhas/colunas (`board.c`)
-- [ ] Estados do jogo, pontuação e combos (`game.c`)
-- [ ] Arrastar e soltar peças com o mouse
+- [x] Definição das peças (`piece.c`)
+- [x] Lógica do tabuleiro: encaixe e eliminação de linhas/colunas (`board.c`)
+- [x] Estados do jogo, pontuação e combos (`game.c`)
+- [x] Arrastar e soltar peças com o mouse
 - [ ] Detecção de derrota (algum bloco não cabe) e tela de game over
 - [ ] Tela "Como jogar"
-- [ ] Sons e efeitos visuais
+- [x] Sons e efeitos visuais
 
 ### Entregas
 
@@ -113,7 +113,7 @@ cmake --build build
 
 ## 👤 Alunos
 
-**Paulo César Regis de Lima** 
+**Paulo César Régis de Lima** 
 
 **Pedro Antonio Beltrão Rihan** 
 
