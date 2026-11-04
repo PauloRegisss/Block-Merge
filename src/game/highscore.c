@@ -26,3 +26,23 @@ bool scores_add(ScoreList *list, int score) {
     qsort(list->values, (size_t)list->count, sizeof(int), compare_desc);
     return true;
 }
+
+bool scores_load(ScoreList *list, const char *path) {
+    if (list == NULL) return false;
+    list->values = NULL;
+    list->count = 0;
+    list->capacity = 0;
+
+    FILE *file = fopen(path, "r");
+    if (file == NULL) return true;   // primeira vez: sem arquivo, lista vazia é normal
+
+    int value;
+    while (fscanf(file, "%d", &value) == 1) {
+        if (!scores_add(list, value)) {
+            fclose(file);
+            return false;
+        }
+    }
+    fclose(file);
+    return true;
+}
