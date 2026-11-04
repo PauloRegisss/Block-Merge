@@ -9,7 +9,10 @@ typedef struct {
     int capacity;    // quantas cabem antes de precisar de realloc
 } ScoreList;
 
-bool scores_add(ScoreList *list, int score);
 bool scores_load(ScoreList *list, const char *path);
+bool scores_add(ScoreList *list, int score);
+bool scores_save(const ScoreList *list, const char *path);
+int  scores_best(const ScoreList *list);
+void scores_free(ScoreList *list);
 
 #endif
