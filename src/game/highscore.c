@@ -46,3 +46,29 @@ bool scores_load(ScoreList *list, const char *path) {
     fclose(file);
     return true;
 }
+
+bool scores_save(const ScoreList *list, const char *path) {
+    if (list == NULL) return false;
+
+    FILE *file = fopen(path, "w");
+    if (file == NULL) return false;
+
+    for (int i = 0; i < list->count; i++) {
+        fprintf(file, "%d\n", list->values[i]);
+    }
+    fclose(file);
+    return true;
+}
+
+int scores_best(const ScoreList *list) {
+    if (list == NULL || list->count == 0) return 0;
+    return list->values[0];   // a lista está ordenada, o maior fica na frente
+}
+
+void scores_free(ScoreList *list) {
+    if (list == NULL) return;
+    free(list->values);
+    list->values = NULL;
+    list->count = 0;
+    list->capacity = 0;
+}
