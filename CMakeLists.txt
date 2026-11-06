@@ -33,6 +33,7 @@ set(PROJECT_SOURCES
     src/screens/fonts/fonts.c
     src/screens/menu/menu.c
     src/screens/gameplay/gameplay.c
+    src/screens/gameover/gameover.c
 )
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
@@ -68,6 +69,7 @@ target_include_directories(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/src/screens/fonts
         ${CMAKE_CURRENT_SOURCE_DIR}/src/screens/menu
         ${CMAKE_CURRENT_SOURCE_DIR}/src/screens/gameplay
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/screens/gameover
 )
 
 target_link_libraries(${PROJECT_NAME}
