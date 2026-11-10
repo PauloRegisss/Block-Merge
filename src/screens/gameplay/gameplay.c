@@ -43,7 +43,7 @@ static void mouse_to_cell(const Piece *piece, Vector2 mouse, int *row, int *col)
     *col = (int)floorf((tl.x - board_origin_x()) / step + 0.5f);
     *row = (int)floorf((tl.y - BOARD_ORIGIN_Y) / step + 0.5f);
 }
-GameScreen gameplay_update(Game *game) {
+GameScreen gameplay_update(Game *game, Sound placement_sound) {
     Vector2 mouse = GetMousePosition();
 
     // 1) começou a arrastar: clique dentro de um slot com peça disponível
@@ -61,7 +61,8 @@ GameScreen gameplay_update(Game *game) {
         int row, col;
         mouse_to_cell(&game->offer.pieces[dragging], mouse, &row, &col);
         // se a peça não couber, devolve -1 e ela simplesmente volta ao slot
-        game_place_piece(game, dragging, row, col);
+        int result = game_place_piece(game, dragging, row, col);
+        if (result >= 0 && IsSoundValid(placement_sound)) PlaySound(placement_sound);
         dragging = -1;
     }
 
@@ -71,7 +72,7 @@ GameScreen gameplay_update(Game *game) {
 
 // ---------- draw ----------
 
-void gameplay_draw(const Game *game) {
+void gameplay_draw(const Game *game, int best_score) {
     Vector2 mouse = GetMousePosition();
     int originX = board_origin_x();
 
@@ -79,6 +80,8 @@ void gameplay_draw(const Game *game) {
 
     DrawTextEx(FontRegular, TextFormat("PONTOS: %d", game->score),
                (Vector2){40.0f, 40.0f}, 32.0f, 1.5f, RAYWHITE);
+    DrawTextEx(FontRegular, TextFormat("RECORDE: %d", best_score),
+               (Vector2){40.0f, 80.0f}, 24.0f, 1.5f, (Color){255, 211, 89, 255});
 
     // bandeja
     for (int i = 0; i < PIECE_OFFER_SIZE; i++) {

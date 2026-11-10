@@ -5,6 +5,7 @@
 #include "screen.h"
 #include "game.h"
 #include "gameplay.h"
+#include "highscore.h"
 
 int main(void) {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
@@ -12,6 +13,10 @@ int main(void) {
     InitWindow(800, 600, "Block Merge");
     SetRandomSeed((unsigned int)time(NULL));
     InitAudioDevice();
+    Sound placementSound = LoadSound("assets/audio/place.wav");
+    if (!IsSoundValid(placementSound)) {
+        TraceLog(LOG_ERROR, "Nao foi possivel carregar assets/audio/place.wav");
+    }
     int monitor = GetCurrentMonitor();
     SetWindowSize(GetMonitorWidth(monitor), GetMonitorHeight(monitor));
     SetWindowPosition(0, 0);
@@ -26,6 +31,12 @@ int main(void) {
 
     GameScreen screen = SCREEN_MENU;
     Game game;
+    const char *highscoresPath = "highscores.txt";
+    ScoreList scores = {0};
+    bool scoresLoaded = scores_load(&scores, highscoresPath);
+    if (!scoresLoaded) {
+        TraceLog(LOG_ERROR, "Nao foi possivel carregar %s", highscoresPath);
+    }
     /*
     Rectangle bottom; // declarei uma variavel bottom do tipo Rectangle
                        // (retangulo)
@@ -47,7 +58,7 @@ int main(void) {
                 screen = menu_update();
                 break;
             case SCREEN_GAMEPLAY:
-                screen = gameplay_update(&game);
+                screen = gameplay_update(&game, placementSound);
                 break;
             default:
                 break;
@@ -58,6 +69,13 @@ int main(void) {
         }
         if (telaAnterior != SCREEN_GAME_OVER && screen == SCREEN_GAME_OVER) {
             StopMusicStream(musicaFundo);
+            if (scoresLoaded) {
+                if (!scores_add(&scores, game.score)) {
+                    TraceLog(LOG_ERROR, "Nao foi possivel adicionar a pontuacao ao recorde");
+                } else if (!scores_save(&scores, highscoresPath)) {
+                    TraceLog(LOG_ERROR, "Nao foi possivel salvar %s", highscoresPath);
+                }
+            }
         }
         BeginDrawing();
         ClearBackground((Color){17, 24, 43, 255});
@@ -69,10 +87,10 @@ int main(void) {
                    16.0f, 1.0f, (Color){140, 150, 170, 160});
         switch (screen) {
             case SCREEN_MENU:
-                menu_draw();
+                menu_draw(scores_best(&scores));
                 break;
             case SCREEN_GAMEPLAY:
-                gameplay_draw(&game);
+                gameplay_draw(&game, scores_best(&scores));
                 break;
             default:
                 break;
@@ -80,8 +98,10 @@ int main(void) {
 
         EndDrawing();
     }
+    scores_free(&scores);
     UnloadFonts();
     UnloadMusicStream(musicaFundo);
+    if (IsSoundValid(placementSound)) UnloadSound(placementSound);
     CloseAudioDevice();
     CloseWindow();
     return 0;

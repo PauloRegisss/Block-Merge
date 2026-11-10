@@ -56,6 +56,13 @@ if(BUILD_TESTING)
     target_include_directories(test_piece_offer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
     target_link_libraries(test_piece_offer PRIVATE raylib)
     add_test(NAME piece_offer COMMAND test_piece_offer)
+
+    add_executable(test_highscore
+        tests/test_highscore.c
+        src/game/highscore.c
+    )
+    target_include_directories(test_highscore PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/game)
+    add_test(NAME highscore COMMAND test_highscore)
 endif()
 
 target_include_directories(${PROJECT_NAME}

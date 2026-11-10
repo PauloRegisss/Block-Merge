@@ -7,7 +7,7 @@
 #include "game.h"
 #include "screen.h"
 
-GameScreen gameplay_update(Game *game);
-void gameplay_draw(const Game *game);
+GameScreen gameplay_update(Game *game, Sound placement_sound);
+void gameplay_draw(const Game *game, int best_score);
 
 #endif
