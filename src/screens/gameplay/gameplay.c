@@ -26,8 +26,6 @@ static Rectangle tray_slot(int i) {
     return (Rectangle){startX + i * (SLOT_SIZE + SLOT_SPACING), y, SLOT_SIZE, SLOT_SIZE};
 }
 
-// ---------- conversão mouse -> tabuleiro ----------
-
 // canto superior esquerdo da peça, em pixels, com a peça centralizada no mouse
 static Vector2 drag_top_left(const Piece *piece, Vector2 mouse) {
     float w = piece_width(piece) * (CELL_SIZE + GAP) - GAP;
@@ -39,10 +37,12 @@ static Vector2 drag_top_left(const Piece *piece, Vector2 mouse) {
 static void mouse_to_cell(const Piece *piece, Vector2 mouse, int *row, int *col) {
     Vector2 tl = drag_top_left(piece, mouse);
     float step = CELL_SIZE + GAP;
-    // floorf + 0.5 arredonda para a célula mais próxima (funciona com negativos)
     *col = (int)floorf((tl.x - board_origin_x()) / step + 0.5f);
     *row = (int)floorf((tl.y - BOARD_ORIGIN_Y) / step + 0.5f);
 }
+
+// ---------- update ----------
+
 GameScreen gameplay_update(Game *game, Sound placement_sound) {
     Vector2 mouse = GetMousePosition();
 
@@ -60,13 +60,17 @@ GameScreen gameplay_update(Game *game, Sound placement_sound) {
     if (dragging != -1 && IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
         int row, col;
         mouse_to_cell(&game->offer.pieces[dragging], mouse, &row, &col);
-        // se a peça não couber, devolve -1 e ela simplesmente volta ao slot
         int result = game_place_piece(game, dragging, row, col);
         if (result >= 0 && IsSoundValid(placement_sound)) PlaySound(placement_sound);
         dragging = -1;
+    }   // <-- esta chave estava faltando
+
+    // 3) game_place_piece ligou game_over: o main.c cuida da música e do placar
+    if (game->game_over) {
+        dragging = -1;
+        return SCREEN_GAME_OVER;
     }
 
-    if (game->game_over) return SCREEN_GAME_OVER;
     return SCREEN_GAMEPLAY;
 }
 
