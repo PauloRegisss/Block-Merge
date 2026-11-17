@@ -32,11 +32,11 @@ Combine estratégia e raciocínio lógico para aproveitar melhor o espaço dispo
 - [x] **Matrizes**: grade 8×8 representada por `int matriz[8][8]`
 - [x] **Estruturas (`struct`)**: peça, tabuleiro, estado do jogo
 - [x] **Ponteiros**: passagem de tabuleiro/peças por referência nas funções
-- [ ] **Alocação dinâmica de memória**: `malloc`/`free` para peças e nós
+- [x] **Alocação dinâmica de memória**: `malloc`/`free` para peças e nós
 - [x] **Listas encadeadas**: ex.: fila de peças oferecidas e/ou ranking de pontuações
-- [ ] **Leitura e escrita em arquivo**: salvar e carregar o top de pontuações
-- [ ] **Animações e movimento**: arrastar peça, animação de limpeza de linhas
-- [ ] **Tratamento de colisão**: peça × grade (encaixe válido) e peça × blocos ocupados
+- [x] **Leitura e escrita em arquivo**: salvar e carregar o top de pontuações
+- [x] **Animações e movimento**: arrastar peça, animação de limpeza de linhas
+- [x] **Tratamento de colisão**: peça × grade (encaixe válido) e peça × blocos ocupados
 - [x] Makefile / script / comando de compilação documentado (Linux, macOS e Windows)
 
 ### Funcionalidades do jogo
@@ -49,7 +49,7 @@ Combine estratégia e raciocínio lógico para aproveitar melhor o espaço dispo
 - [x] Lógica do tabuleiro: encaixe e eliminação de linhas/colunas (`board.c`)
 - [x] Estados do jogo, pontuação e combos (`game.c`)
 - [x] Arrastar e soltar peças com o mouse
-- [ ] Detecção de derrota (algum bloco não cabe) e tela de game over
+- [x] Detecção de derrota (algum bloco não cabe) e tela de game over
 - [ ] Tela "Como jogar"
 - [x] Sons e efeitos visuais
 
