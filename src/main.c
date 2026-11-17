@@ -31,7 +31,7 @@ int main(void) {
     TraceLog(LOG_INFO, "musica valida: %d", IsMusicValid(musicaFundo));
 
     GameScreen screen = SCREEN_MENU;
-    Game game = {0};   
+    Game game = {0};
     const char *highscoresPath = "highscores.txt";
     ScoreList scores = {0};
     bool scoresLoaded = scores_load(&scores, highscoresPath);
@@ -91,8 +91,8 @@ int main(void) {
                 gameplay_draw(&game, scores_best(&scores));
                 break;
             case SCREEN_GAME_OVER:
-                gameplay_draw(&game, scores_best(&scores));   
-                gameover_draw(&game, &scores);                
+                gameplay_draw(&game, scores_best(&scores));
+                gameover_draw(&game, &scores);
                 break;
             default:
                 break;
