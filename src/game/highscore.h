@@ -3,10 +3,15 @@
 
 #include <stdbool.h>
 
+// um nó da lista encadeada: guarda uma pontuação e aponta para a próxima
+typedef struct ScoreNode {
+    int value;
+    struct ScoreNode *next;
+} ScoreNode;
+
 typedef struct {
-    int *values;     // array alocado dinamicamente
-    int count;       // quantas pontuações existem
-    int capacity;    // quantas cabem antes de precisar de realloc
+    ScoreNode *head; // maior pontuação (lista ordenada em ordem decrescente)
+    int count;       // quantos nós existem
 } ScoreList;
 
 bool scores_load(ScoreList *list, const char *path);

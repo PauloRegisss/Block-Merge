@@ -3,43 +3,53 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define INITIAL_CAPACITY 8
-
-static int compare_desc(const void *a, const void *b) {
-    int x = *(const int *)a;
-    int y = *(const int *)b;
-    return y - x;   // maior primeiro
+// cria um nó novo com malloc; devolve NULL se faltar memória
+static ScoreNode *node_create(int value) {
+    ScoreNode *node = malloc(sizeof(ScoreNode));
+    if (node == NULL) return NULL;
+    node->value = value;
+    node->next = NULL;
+    return node;
 }
 
+// insere já na posição certa, mantendo a lista em ordem decrescente
 bool scores_add(ScoreList *list, int score) {
     if (list == NULL) return false;
 
-    if (list->count == list->capacity) {
-        int newCapacity = (list->capacity == 0) ? INITIAL_CAPACITY : list->capacity * 2;
-        int *bigger = realloc(list->values, (size_t)newCapacity * sizeof(int));
-        if (bigger == NULL) return false;   // o array antigo continua válido
-        list->values = bigger;
-        list->capacity = newCapacity;
+    ScoreNode *node = node_create(score);
+    if (node == NULL) return false;
+
+    if (list->head == NULL || score > list->head->value) {
+        // vira o novo primeiro nó
+        node->next = list->head;
+        list->head = node;
+    } else {
+        // anda até o último nó que ainda é >= score e encaixa depois dele
+        ScoreNode *current = list->head;
+        while (current->next != NULL && current->next->value >= score) {
+            current = current->next;
+        }
+        node->next = current->next;
+        current->next = node;
     }
 
-    list->values[list->count++] = score;
-    qsort(list->values, (size_t)list->count, sizeof(int), compare_desc);
+    list->count++;
     return true;
 }
 
 bool scores_load(ScoreList *list, const char *path) {
     if (list == NULL) return false;
-    list->values = NULL;
+    list->head = NULL;
     list->count = 0;
-    list->capacity = 0;
 
     FILE *file = fopen(path, "r");
-    if (file == NULL) return true;   // primeira vez: sem arquivo, lista vazia é normal
+    if (file == NULL) return true; // primeira vez: sem arquivo, lista vazia é normal
 
     int value;
     while (fscanf(file, "%d", &value) == 1) {
         if (!scores_add(list, value)) {
             fclose(file);
+            scores_free(list);
             return false;
         }
     }
@@ -53,22 +63,28 @@ bool scores_save(const ScoreList *list, const char *path) {
     FILE *file = fopen(path, "w");
     if (file == NULL) return false;
 
-    for (int i = 0; i < list->count; i++) {
-        fprintf(file, "%d\n", list->values[i]);
+    for (const ScoreNode *node = list->head; node != NULL; node = node->next) {
+        fprintf(file, "%d\n", node->value);
     }
     fclose(file);
     return true;
 }
 
 int scores_best(const ScoreList *list) {
-    if (list == NULL || list->count == 0) return 0;
-    return list->values[0];   // a lista está ordenada, o maior fica na frente
+    if (list == NULL || list->head == NULL) return 0;
+    return list->head->value; // o maior fica sempre na frente
 }
 
+// percorre a lista dando free em cada nó
 void scores_free(ScoreList *list) {
     if (list == NULL) return;
-    free(list->values);
-    list->values = NULL;
+
+    ScoreNode *node = list->head;
+    while (node != NULL) {
+        ScoreNode *next = node->next; // guarda o próximo antes de liberar
+        free(node);
+        node = next;
+    }
+    list->head = NULL;
     list->count = 0;
-    list->capacity = 0;
 }

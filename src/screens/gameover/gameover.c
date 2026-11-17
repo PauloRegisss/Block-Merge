@@ -19,27 +19,6 @@ static void draw_centered(const char *text, float size, float y, Color color) {
                (Vector2){((float)GetScreenWidth() - s.x) / 2.0f, y}, size, 1.0f, color);
 }
 
-<<<<<<< HEAD
-static void draw_button(Rectangle r, const char *label, Color fill, Color textColor) {
-    bool hover = CheckCollisionPointRec(GetMousePosition(), r);
-    DrawRectangleRounded(r, 0.2f, 8, hover ? Fade(fill, 0.85f) : fill);
-
-    Vector2 s = MeasureTextEx(FontRegular, label, 22.0f, 1.0f);
-    DrawTextEx(FontRegular, label,
-               (Vector2){r.x + (r.width - s.x) / 2.0f, r.y + (r.height - s.y) / 2.0f},
-               22.0f, 1.0f, textColor);
-}
-
-GameScreen gameover_update(void) {
-    if (IsKeyPressed(KEY_ENTER)) return SCREEN_GAMEPLAY;
-
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        Vector2 mouse = GetMousePosition();
-        if (CheckCollisionPointRec(mouse, button_rect(0))) return SCREEN_GAMEPLAY;
-        if (CheckCollisionPointRec(mouse, button_rect(1))) return SCREEN_MENU;
-    }
-    return SCREEN_GAME_OVER;
-=======
 static void draw_button(Rectangle r, const char *label) {
     bool hover = CheckCollisionPointRec(GetMousePosition(), r);
     DrawRectangleRec(r, hover ? LIGHTGRAY : GRAY);
@@ -78,5 +57,4 @@ void gameover_draw(const Game *game, const ScoreList *scores) {
 
     draw_button(button_rect(0), "JOGAR NOVAMENTE");
     draw_button(button_rect(1), "MENU");
->>>>>>> c9208bd05beee1ac3cd9a7fb0877568165cb2739
 }
