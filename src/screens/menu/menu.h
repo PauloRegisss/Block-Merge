@@ -4,6 +4,6 @@
 
 
 GameScreen menu_update(void);
-void menu_draw(void);
+void menu_draw(int best_score);
 
 #endif

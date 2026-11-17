@@ -4,24 +4,26 @@
 
 Combine estratégia e raciocínio lógico para aproveitar melhor o espaço disponível, acumular pontos e alcançar a maior pontuação possível. Simples de aprender, mas desafiador de dominar, Block Merge oferece uma experiência divertida para quem gosta de testar suas habilidades e superar seus próprios recordes.
 
-> 🚧 **Status:** em desenvolvimento. Já existem o menu inicial e o desenho da grade 8×8.
+> ✅ **Status:** jogo completo e jogável: menu, partida, game over, recorde salvo em arquivo, música e efeito sonoro.
 
 ## 🎯 Como jogar
 
-1. A cada rodada, o jogo oferece **3 blocos** (peças) para você posicionar.
-2. Arraste cada peça e encaixe na grade 8×8.
-3. Sempre que uma **linha ou coluna ficar completa**, ela é eliminada e você ganha pontos.
-4. Eliminar várias linhas/colunas de uma só vez gera **combos** com mais pontos.
-5. **Fim de jogo:** se o jogador não conseguir encaixar um dos blocos oferecidos, ele perde.
+1. A cada rodada, o jogo oferece **3 peças** na bandeja abaixo do tabuleiro.
+2. Arraste cada peça com o mouse e solte na grade 8×8. Uma prévia mostra onde ela vai cair.
+3. Sempre que uma **linha ou coluna ficar completa**, ela é eliminada.
+4. Cada peça encaixada soma pontos de acordo com a quantidade de blocos dela.
+5. Quando as 3 peças são usadas, uma nova rodada é oferecida (sempre possível de encaixar).
+6. **Fim de jogo:** se as peças restantes não couberem mais em nenhum lugar da grade, o jogador perde.
 
-## 🎮 Controles (planejado)
+Seu recorde fica salvo em `highscores.txt` e aparece no menu e durante a partida.
 
-| Ação           | Tecla / Mouse           |
-| -------------- | ----------------------- |
-| Arrastar peça  | `Botão esq do mouse`    |
-| Voltar ao menu | `A definir`             |
-| Pausar         | `A definir`             |
-| Reiniciar      | `A definir`             |
+## 🎮 Controles
+
+| Ação                    | Tecla / Mouse         |
+| ----------------------- | --------------------- |
+| Arrastar e soltar peça  | `Botão esq do mouse`  |
+| Jogar novamente (game over) | `R` ou botão na tela |
+| Voltar ao menu (game over)  | Botão na tela     |
 
 ## ✅ Progresso
 
@@ -29,29 +31,31 @@ Combine estratégia e raciocínio lógico para aproveitar melhor o espaço dispo
 
 - [x] Linguagem C, em linha de comando
 - [x] Biblioteca para jogos (raylib)
-- [x] **Matrizes**: grade 8×8 representada por `int matriz[8][8]`
-- [x] **Estruturas (`struct`)**: peça, tabuleiro, estado do jogo
-- [x] **Ponteiros**: passagem de tabuleiro/peças por referência nas funções
-- [ ] **Alocação dinâmica de memória**: `malloc`/`free` para peças e nós
-- [x] **Listas encadeadas**: ex.: fila de peças oferecidas e/ou ranking de pontuações
-- [ ] **Leitura e escrita em arquivo**: salvar e carregar o top de pontuações
-- [ ] **Animações e movimento**: arrastar peça, animação de limpeza de linhas
-- [ ] **Tratamento de colisão**: peça × grade (encaixe válido) e peça × blocos ocupados
+- [x] **Matrizes**: tabuleiro 8×8 (`int cells[8][8]`) e formato das peças (`int shape[3][3]`)
+- [x] **Estruturas (`struct`)**: `Piece`, `PieceOffer`, `Board`, `Game`, `ScoreList`
+- [x] **Ponteiros**: tabuleiro, peças e jogo passados por referência nas funções
+- [x] **Alocação dinâmica de memória**: `realloc`/`free` na lista de pontuações (`ScoreList`)
+- [ ] **Listas encadeadas**: a lista de pontuações usa array dinâmico, não nós encadeados
+- [x] **Leitura e escrita em arquivo**: `highscores.txt` carregado ao iniciar e salvo ao fim de cada partida
+- [x] **Animações e movimento**: arrastar peça com prévia de encaixe
+- [x] **Tratamento de colisão**: peça × grade (limites) e peça × blocos ocupados
 - [x] Makefile / script / comando de compilação documentado (Linux, macOS e Windows)
 
 ### Funcionalidades do jogo
 
-- [x] Janela 1920×1080 com raylib
-- [x] Menu principal com botão **Start**
-- [x] Troca de tela (`MENU` → `JOGANDO`)
+- [x] Janela redimensionável, ajustada ao tamanho do monitor
+- [x] Menu principal com botão **Jogar**
+- [x] Troca de telas (`MENU` → `JOGANDO` → `GAME OVER`)
 - [x] Desenho da grade 8×8 a partir da matriz
-- [x] Definição das peças (`piece.c`)
+- [x] 15 formatos de peças com cores da paleta (`piece.c`)
 - [x] Lógica do tabuleiro: encaixe e eliminação de linhas/colunas (`board.c`)
-- [x] Estados do jogo, pontuação e combos (`game.c`)
+- [x] Estado do jogo, pontuação e geração de peças sempre jogáveis (`game.c`)
 - [x] Arrastar e soltar peças com o mouse
-- [ ] Detecção de derrota (algum bloco não cabe) e tela de game over
+- [x] Detecção de derrota e tela de game over
+- [x] Recorde local persistente (`highscore.c`)
+- [x] Música de fundo e som ao encaixar uma peça
+- [x] Testes automatizados (CTest) para peças, ofertas/regras do jogo e recorde
 - [ ] Tela "Como jogar"
-- [x] Sons e efeitos visuais
 
 ### Entregas
 
@@ -65,20 +69,32 @@ Combine estratégia e raciocínio lógico para aproveitar melhor o espaço dispo
 ```
 Block-Merge/
 ├── src/
-│   ├── main.c        # Ponto de entrada, janela, menu e desenho da grade
-│   ├── game.c        # Estado e loop do jogo
-│   ├── board.c       # Lógica do tabuleiro
-│   └── piece.c       # Definição e manipulação das peças
-├── include/          # Headers (.h)
-├── design.pen        # Protótipo visual do menu (1440×900)
-├── CMakeLists.txt    # Configuração de build
+│   ├── main.c                # Janela, áudio, loop principal e troca de telas
+│   ├── game/
+│   │   ├── board.c / .h      # Lógica do tabuleiro
+│   │   ├── game.c / .h       # Estado do jogo, pontuação e oferta de peças
+│   │   └── highscore.c / .h  # Lista de pontuações (carregar/salvar)
+│   ├── materials/
+│   │   └── piece.c / .h      # Formatos, cores e desenho das peças
+│   └── screens/
+│       ├── screen.h          # Enum das telas
+│       ├── fonts/            # Carregamento das fontes (Anton e Geist)
+│       ├── menu/             # Tela de menu
+│       ├── gameplay/         # Tela da partida (arrastar e soltar)
+│       └── gameover/         # Tela de fim de jogo
+├── tests/                    # Testes CTest (peças, ofertas, recorde)
+├── assets/                   # Fontes e áudio (place.wav, musica_fundo.wav)
+├── docs/superpowers/         # Specs e planos das funcionalidades
+├── highscores.txt            # Recorde local (gerado ao jogar)
+├── design.pen                # Protótipo visual do menu (1440×900)
+├── CMakeLists.txt            # Configuração de build
 └── README.md
 ```
 
 ## 🛠️ Tecnologias
 
 - **Linguagem:** C (padrão C11)
-- **Biblioteca gráfica:** [raylib](https://www.raylib.com/)
+- **Biblioteca gráfica e de áudio:** [raylib](https://www.raylib.com/) 5.5
 - **Build:** CMake ≥ 3.22
 - **Compiladores:** GCC ou Clang
 
@@ -88,7 +104,7 @@ Block-Merge/
 
 - Compilador C (GCC ou Clang)
 - CMake 3.22 ou superior
-- raylib instalada e encontrável pelo CMake
+- raylib 5.5 (se não for encontrada, o CMake baixa automaticamente)
 
 **Ubuntu/Debian**
 
@@ -138,7 +154,17 @@ cmake --build build
 ./build/BlockMerge.exe
 ```
 
+> ⚠️ Execute o jogo a partir da **raiz do repositório**: as pastas `assets/` e o arquivo `highscores.txt` são lidos por caminho relativo.
+
 > Se a configuração falhar com erro de gerador (por exemplo, `nmake`), apague a pasta `build` (`rmdir /s /q build` no CMD ou `rm -rf build` no MSYS2) e rode o `cmake -S . -B build -G Ninja` de novo.
+
+### Testes
+
+```bash
+cmake -S . -B build -DBUILD_TESTING=ON
+cmake --build build
+ctest --test-dir build --output-on-failure
+```
 
 ## 👤 Alunos
 

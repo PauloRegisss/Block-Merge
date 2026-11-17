@@ -26,8 +26,6 @@ static Rectangle tray_slot(int i) {
     return (Rectangle){startX + i * (SLOT_SIZE + SLOT_SPACING), y, SLOT_SIZE, SLOT_SIZE};
 }
 
-// ---------- conversão mouse -> tabuleiro ----------
-
 // canto superior esquerdo da peça, em pixels, com a peça centralizada no mouse
 static Vector2 drag_top_left(const Piece *piece, Vector2 mouse) {
     float w = piece_width(piece) * (CELL_SIZE + GAP) - GAP;
@@ -39,11 +37,13 @@ static Vector2 drag_top_left(const Piece *piece, Vector2 mouse) {
 static void mouse_to_cell(const Piece *piece, Vector2 mouse, int *row, int *col) {
     Vector2 tl = drag_top_left(piece, mouse);
     float step = CELL_SIZE + GAP;
-    // floorf + 0.5 arredonda para a célula mais próxima (funciona com negativos)
     *col = (int)floorf((tl.x - board_origin_x()) / step + 0.5f);
     *row = (int)floorf((tl.y - BOARD_ORIGIN_Y) / step + 0.5f);
 }
-GameScreen gameplay_update(Game *game) {
+
+// ---------- update ----------
+
+GameScreen gameplay_update(Game *game, Sound placement_sound) {
     Vector2 mouse = GetMousePosition();
 
     // 1) começou a arrastar: clique dentro de um slot com peça disponível
@@ -60,18 +60,23 @@ GameScreen gameplay_update(Game *game) {
     if (dragging != -1 && IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
         int row, col;
         mouse_to_cell(&game->offer.pieces[dragging], mouse, &row, &col);
-        // se a peça não couber, devolve -1 e ela simplesmente volta ao slot
-        game_place_piece(game, dragging, row, col);
+        int result = game_place_piece(game, dragging, row, col);
+        if (result >= 0 && IsSoundValid(placement_sound)) PlaySound(placement_sound);
         dragging = -1;
+    }   // <-- esta chave estava faltando
+
+    // 3) game_place_piece ligou game_over: o main.c cuida da música e do placar
+    if (game->game_over) {
+        dragging = -1;
+        return SCREEN_GAME_OVER;
     }
 
-    if (game->game_over) return SCREEN_GAME_OVER;
     return SCREEN_GAMEPLAY;
 }
 
 // ---------- draw ----------
 
-void gameplay_draw(const Game *game) {
+void gameplay_draw(const Game *game, int best_score) {
     Vector2 mouse = GetMousePosition();
     int originX = board_origin_x();
 
@@ -79,6 +84,8 @@ void gameplay_draw(const Game *game) {
 
     DrawTextEx(FontRegular, TextFormat("PONTOS: %d", game->score),
                (Vector2){40.0f, 40.0f}, 32.0f, 1.5f, RAYWHITE);
+    DrawTextEx(FontRegular, TextFormat("RECORDE: %d", best_score),
+               (Vector2){40.0f, 80.0f}, 24.0f, 1.5f, (Color){255, 211, 89, 255});
 
     // bandeja
     for (int i = 0; i < PIECE_OFFER_SIZE; i++) {

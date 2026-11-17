@@ -10,11 +10,6 @@ static Rectangle get_start_button(void) {
                        ((float)GetScreenHeight() - START_BUTTON_HEIGHT) / 2.0f, START_BUTTON_WIDTH,
                        START_BUTTON_HEIGHT};
 }
-static Rectangle get_how_to_play_button(void) {
-    return (Rectangle){((float)GetScreenWidth() - HOW_BUTTON_WIDTH - 10) / 2.0f,
-                       ((float)GetScreenHeight() - HOW_BUTTON_HEIGHT + 230) / 2.0f,
-                       HOW_BUTTON_WIDTH, HOW_BUTTON_HEIGHT};
-}
 GameScreen menu_update(void) {
     if (CheckCollisionPointRec(GetMousePosition(), get_start_button()) &&
         IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -23,7 +18,7 @@ GameScreen menu_update(void) {
     return SCREEN_MENU;
 }
 
-void menu_draw(void) {
+void menu_draw(int best_score) {
     ClearBackground((Color){17, 24, 43, 255});
 
     DrawTextEx(
@@ -42,14 +37,13 @@ void menu_draw(void) {
     Vector2 textPosition = {start_button.x + (start_button.width - textSize.x) / 2.0f,
                             start_button.y + (start_button.height - textSize.y) / 2.0f};
     DrawTextEx(FontRegular, "JOGAR", textPosition, 35.0f, 1.5f, (Color){17, 24, 43, 255});
-    Rectangle how_button = get_how_to_play_button();
-    DrawRectangleRounded(how_button, 0.2f, 4, (Color){17, 24, 43, 255});
-    DrawRectangleRoundedLinesEx(how_button, 0.2f, 4, 2.0f, (Color){247, 242, 233, 102});
 
-    Vector2 howtextSize = MeasureTextEx(FontRegular, "COMO JOGAR", 25.0f, 1.5f);
-    Vector2 howtextPosition = {how_button.x + (how_button.width - howtextSize.x) / 2.0f,
-                               how_button.y + (how_button.height - howtextSize.y) / 2.0f};
-    DrawTextEx(FontRegular, "COMO JOGAR", howtextPosition, 25.0f, 1.5f, WHITE);
+    const char *bestText = TextFormat("RECORDE: %d", best_score);
+    Vector2 bestSize = MeasureTextEx(FontRegular, bestText, 28.0f, 1.5f);
+    DrawTextEx(FontRegular, bestText,
+               (Vector2){((float)GetScreenWidth() - bestSize.x) / 2.0f,
+                         (float)GetScreenHeight() - bestSize.y - 90.0f},
+               28.0f, 1.5f, (Color){255, 211, 89, 255});
     // DrawRectangleRec(get_start_button(), (Color){255, 211, 89, 255});
     // Vector2 textSize = MeasureTextEx(FontRegular, "JOGAR", 100, 1.5f);
 
