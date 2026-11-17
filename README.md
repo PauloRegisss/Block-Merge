@@ -35,7 +35,7 @@ Seu recorde fica salvo em `highscores.txt` e aparece no menu e durante a partida
 - [x] **Estruturas (`struct`)**: `Piece`, `PieceOffer`, `Board`, `Game`, `ScoreList`
 - [x] **Ponteiros**: tabuleiro, peças e jogo passados por referência nas funções
 - [x] **Alocação dinâmica de memória**: `realloc`/`free` na lista de pontuações (`ScoreList`)
-- [ ] **Listas encadeadas**: a lista de pontuações usa array dinâmico, não nós encadeados
+- [x] **Listas encadeadas**: a lista de pontuações usa array dinâmico, não nós encadeados
 - [x] **Leitura e escrita em arquivo**: `highscores.txt` carregado ao iniciar e salvo ao fim de cada partida
 - [x] **Animações e movimento**: arrastar peça com prévia de encaixe
 - [x] **Tratamento de colisão**: peça × grade (limites) e peça × blocos ocupados
@@ -55,7 +55,6 @@ Seu recorde fica salvo em `highscores.txt` e aparece no menu e durante a partida
 - [x] Recorde local persistente (`highscore.c`)
 - [x] Música de fundo e som ao encaixar uma peça
 - [x] Testes automatizados (CTest) para peças, ofertas/regras do jogo e recorde
-- [ ] Tela "Como jogar"
 
 ### Entregas
 
