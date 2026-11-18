@@ -21,9 +21,9 @@ int main(void) {
     ScoreList loaded;
     assert(scores_load(&loaded, path));
     assert(loaded.count == 3);
-    assert(loaded.values[0] == 50);
-    assert(loaded.values[1] == 20);
-    assert(loaded.values[2] == 10);
+    assert(loaded.head->value == 50);
+    assert(loaded.head->next->value == 20);
+    assert(loaded.head->next->next->value == 10);
     assert(scores_best(&loaded) == 50);
     assert(!scores_save(&loaded, "highscore_test_no_such_dir/scores.txt"));
     scores_free(&loaded);
