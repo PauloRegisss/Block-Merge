@@ -1,6 +1,5 @@
-#include "game/board.h"
-#include "game/game.h"
-
+#include "board.h"
+#include "game.h"
 #include <assert.h>
 #include <string.h>
 

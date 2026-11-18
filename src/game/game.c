@@ -1,7 +1,5 @@
 #include "game.h"
-
 #include "raylib.h"
-
 #include <stddef.h>
 
 static int count_empty_cells(const Board *board) {

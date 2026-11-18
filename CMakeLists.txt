@@ -44,7 +44,7 @@ if(BUILD_TESTING)
         tests/test_piece_catalog.c
         src/materials/piece.c
     )
-    target_include_directories(test_piece_catalog PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_include_directories(test_piece_catalog PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
     target_link_libraries(test_piece_catalog PRIVATE raylib)
     add_test(NAME piece_catalog COMMAND test_piece_catalog)
 
@@ -54,7 +54,7 @@ if(BUILD_TESTING)
         src/game/game.c
         src/materials/piece.c
     )
-    target_include_directories(test_piece_offer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_include_directories(test_piece_offer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
     target_link_libraries(test_piece_offer PRIVATE raylib)
     add_test(NAME piece_offer COMMAND test_piece_offer)
 
@@ -62,7 +62,7 @@ if(BUILD_TESTING)
         tests/test_highscore.c
         src/game/highscore.c
     )
-    target_include_directories(test_highscore PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/game)
+    target_include_directories(test_highscore PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
     add_test(NAME highscore COMMAND test_highscore)
 endif()
 

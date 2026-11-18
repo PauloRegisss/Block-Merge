@@ -1,7 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include "materials/piece.h"
+#include "piece.h"
 #include <stdbool.h>
 
 #define BOARD_SIZE 8

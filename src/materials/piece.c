@@ -1,5 +1,4 @@
 #include "piece.h"
-
 #include <stddef.h>
 
 #define PALETTE_COUNT 4
