@@ -59,9 +59,8 @@ Seu recorde fica salvo em `highscores.txt` e aparece no menu e durante a partida
 ### Entregas
 
 - [x] Parte 1: formulário com grupo, link do GitHub e descrição do jogo (13/10/2026)
-- [ ] Vídeo curto do jogo rodando, com link no repositório
-- [ ] Parte 2: entrega final com código-fonte e formulário (19/11/2026)
-- [ ] Apresentação oral (24/11 ou 26/11)
+- [x] Vídeo curto do jogo rodando, com link no repositório: [https://youtu.be/k5wsZRyCmTk] 
+
 
 ## 🗂️ Estrutura do projeto
 
