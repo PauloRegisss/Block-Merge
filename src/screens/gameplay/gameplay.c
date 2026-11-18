@@ -63,7 +63,7 @@ GameScreen gameplay_update(Game *game, Sound placement_sound) {
         int result = game_place_piece(game, dragging, row, col);
         if (result >= 0 && IsSoundValid(placement_sound)) PlaySound(placement_sound);
         dragging = -1;
-    }   // <-- esta chave estava faltando
+    }  
 
     // 3) game_place_piece ligou game_over: o main.c cuida da música e do placar
     if (game->game_over) {
